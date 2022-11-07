@@ -1,0 +1,89 @@
+<obrazac-a-1>
+
+    <zavod>
+        <naziv>Zavod za intelektualnu svojinu</naziv>
+        <grad>Beograd</grad>
+        <ulica-broj>Kneginje Ljubice 5</ulica-broj>
+    </zavod>
+
+    <zahtev-za-unosenje-u-evidenciju-i-deponovanje-autorskih-dela>
+        
+        <podnosilac required='true'>
+            <ime> </ime>
+            <prezime> </prezime>
+            <adresa>
+                <ulica-broj> </ulica-broj>
+                <grad> </grad>
+                <postanski-kod> </postanski-kod>
+            </adresa>
+            <fizicko-lice>
+                <drzavljanstvo> </drzavljanstvo>
+            </fizicko-lice>
+            <pravno-lice>
+                <poslovno-ime> </poslovno-ime>
+                <sediste> </sediste>
+            </pravno-lice>
+            <telefon> </telefon>
+            <email> </email>
+        </podnosilac>
+
+        <pseudonim-znak-autora required='false'> </pseudonim-znak-autora>
+
+        <punomocnik required='false'>
+            <ime> </ime>
+            <prezime> </prezime>
+            <adresa>
+                <ulica-broj> </ulica-broj>
+                <grad> </grad>
+                <postanski-kod> </postanski-kod>
+            </adresa>
+        </punomocnik>
+
+        <naslov-autorskog-dela>
+            <naslov required='true'> </naslov>
+            <alternativni-naslov required='false'> </alternativni-naslov>
+        </naslov-autorskog-dela>
+
+        <naslov-delo-prerade required='false'>
+            <naslov> </naslov>
+            <autor> </autor>
+        </naslov-delo-prerade>
+
+        <vrsta-autorskog-dela required='true'></vrsta-autorskog-dela>
+
+        <forma-zapisa-autorskog-dela required='true'></forma-zapisa-autorskog-dela>
+
+        <podaci-o-autoru-nepodnosilac required='false'> 
+            <autor-ziv id='0'>
+                <ime> </ime>
+                <prezime> </prezime>
+                <adresa>
+                    <ulica-broj> </ulica-broj>
+                    <grad> </grad>
+                    <postanski-kod> </postanski-kod>
+                </adresa>
+                <drzavljanstvo> </drzavljanstvo>
+            </autor-ziv>
+            <autor-preminuo id='0'>
+                <ime> </ime>
+                <prezime> </prezime>
+                <godina-smrti> </godina-smrti>
+            </autor-preminuo>
+            <autor-anoniman></autor-anoniman>
+        </podaci-o-autoru-nepodnosilac>
+
+        <autorsko-delo-stvoreno-radnim-odnosom required='false'></autorsko-delo-stvoreno-radnim-odnosom>
+
+        <nacin-koriscenja required='false'></nacin-koriscenja>
+
+        <prilozi required='false'>
+            <opis-autorskog-dela> </opis-autorskog-dela>
+            <primer-autorskog-dela> </primer-autorskog-dela>
+        </prilozi>
+
+        <broj-prijave required='true'> </broj-prijave>
+
+        <datum-podnosenja required='true'> </datum-podnosenja>
+        
+    </zahtev-za-unosenje-u-evidenciju-i-deponovanje-autorskih-dela>
+</obrazac-a-1>
