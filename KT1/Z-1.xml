@@ -1,0 +1,103 @@
+<zahtev_za_priznanje_ziga brojPrijave="Z-125/25" datumPodnosenja="21.12.2022.">
+    <podnosilac>
+        <ime> </ime>
+        <prezime> </prezime>
+        
+        <adresa>
+            <drzava> <drzava>
+            <postanski_broj> <postanski_broj>
+            <mesto> </mesto>
+            <ulica>
+                <naziv></naziv>
+                <broj> </borj>
+            </ulica>
+        </adresa>
+        <kontakt>
+            <telefon> </telefon>
+            <email> </email>
+            <fax> </fax>
+        </kontakt>
+        <potpis> </potpis>
+        <pecat> </pecat>
+    </podnosilac>
+    <punomocnik>
+        <ime> </ime>
+        <prezime> </prezime>
+        
+        <adresa>
+            <drzava> <drzava>
+            <postanski_broj> <postanski_broj>
+            <mesto> </mesto>
+            <ulica>
+                <naziv></naziv>
+                <broj> </borj>
+            </ulica>
+        </adresa>
+        <kontakt>
+            <telefon> </telefon>
+            <email> </email>
+            <fax> </fax>
+        </kontakt>
+    </punomocnik>
+    <zajednicki_posrednik>
+        <ime> </ime>
+        <prezime> </prezime>
+        
+        <adresa>
+            <drzava> <drzava>
+            <postanski_broj> <postanski_broj>
+            <mesto> </mesto>
+            <ulica>
+                <naziv></naziv>
+                <broj> </borj>
+            </ulica>
+        </adresa>
+        <kontakt>
+            <telefon> </telefon>
+            <email> </email>
+            <fax> </fax>
+        </kontakt>
+    </zajednicki_posrednik>
+
+    <opis_ziga>
+        <tip_ziga></tip_ziga>
+
+        <znak>
+            <izgled_znaka></izgled_znaka>
+            <vrsta_znaka></vrsta_znaka>
+            <boje></boje>
+            <transliteracija></transliteracija>
+            <prevod></prevod>
+            <opis_znaka></opis_znaka>
+        </znak>
+    </opis_ziga>
+
+    <brojevi_klasa_robe_usluga>
+        <broj></broj>
+        <broj></broj>
+    </brojevi_klasa_robe_usluga>
+    
+    <zatrazeno_pravo_prvenstva>
+        <pravo></pravo>
+        <osnov></osnov>
+    <zatrazeno_pravo_prvenstva>
+
+    <placanje>
+        <osnovna_taksa> </osnovna_taksa>
+        <za__klasa> </za__klasa>
+        <graficko_resenje> </graficko_resenje>
+        <ukupno></ukupno>
+    </placanje>
+
+    <prilozi>
+        <primerak_znaka> </primerak_znaka>
+        <spisak_robe_usluga> </spisak_robe_usluga>
+        <punomocje> </punomocje>
+        <generalno_punomocje_ranije_prilozeno> </generalno_punomocje_ranije_prilozeno>
+        <punomocje_naknadno_dostavljeno></punomocje_naknadno_dostavljeno>
+        <opsti_akt_o_kolektivnom_zigu></opsti_akt_o_kolektivnom_zigu>
+        <dokaz_o_pravu_prvenstva></dokaz_o_pravu_prvenstva>
+        <dokaz_o_uplati_takse></dokaz_o_uplati_takse>
+    </prilozi>
+    
+</zahtev_za_priznanje_ziga>
