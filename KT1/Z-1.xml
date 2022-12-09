@@ -65,7 +65,10 @@
         <znak>
             <izgled_znaka></izgled_znaka>
             <vrsta_znaka></vrsta_znaka>
-            <boje></boje>
+            <boje>
+                <boja></boja>
+                <boja></boja>
+            </boje>
             <transliteracija></transliteracija>
             <prevod></prevod>
             <opis_znaka></opis_znaka>
@@ -84,7 +87,6 @@
 
     <placanje>
         <osnovna_taksa> </osnovna_taksa>
-        <za__klasa> </za__klasa>
         <graficko_resenje> </graficko_resenje>
         <ukupno></ukupno>
     </placanje>
