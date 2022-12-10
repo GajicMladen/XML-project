@@ -45,6 +45,7 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+
 		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -92,6 +93,7 @@
 			<scope>test</scope>
 		</dependency>
 
+
 	</dependencies>
 
 	<build>
@@ -100,6 +102,27 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${project.parent.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>2.5.0</version>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<packageName>Z1Classes</packageName>
+					<sources>
+						<source>src/main/resources/xsdSchemes/Z1.xsd</source>
+					</sources>
+					<outputDirectory>${basedir}/src/main/java/com/example/xmltim11/gen</outputDirectory>
+					<clearOutputDir>true</clearOutputDir>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
