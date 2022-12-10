@@ -1,27 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <obrazac-a-1>
 
     <zavod>
         <naziv>Zavod za intelektualnu svojinu</naziv>
-        <grad>Beograd</grad>
-        <ulica-broj>Kneginje Ljubice 5</ulica-broj>
+        <adresa>
+            <ulica>Kneginje Ljubice</ulica>
+            <broj>5</broj>
+            <grad>Beograd</grad>
+            <postanski-kod>11000</postanski-kod>
+        </adresa>
     </zavod>
 
-    <zahtev-za-unosenje-u-evidenciju-i-deponovanje-autorskih-dela>
+    <zahtev naslov="Zahtev za unosenje u evidenciju i deponovanje autorskih dela">
         
-        <podnosilac required='true'>
-            <ime> </ime>
-            <prezime> </prezime>
-            <adresa>
-                <ulica-broj> </ulica-broj>
-                <grad> </grad>
-                <postanski-kod> </postanski-kod>
-            </adresa>
+        <podnosilac required='true'>                        
             <fizicko-lice>
+                <ime> </ime>
+                <prezime> </prezime>
+                <adresa>
+                    <ulica> </ulica>
+                    <broj> </broj>
+                    <grad> </grad>
+                    <postanski-kod> </postanski-kod>
+                </adresa>
                 <drzavljanstvo> </drzavljanstvo>
             </fizicko-lice>
             <pravno-lice>
                 <poslovno-ime> </poslovno-ime>
-                <sediste> </sediste>
+                <sediste>
+                    <adresa>
+                        <ulica> </ulica>
+                        <broj> </broj>
+                        <grad> </grad>
+                        <postanski-kod> </postanski-kod>
+                    </adresa>
+                </sediste>
             </pravno-lice>
             <telefon> </telefon>
             <email> </email>
@@ -33,7 +46,8 @@
             <ime> </ime>
             <prezime> </prezime>
             <adresa>
-                <ulica-broj> </ulica-broj>
+                <ulica> </ulica>
+                <broj> </broj>
                 <grad> </grad>
                 <postanski-kod> </postanski-kod>
             </adresa>
@@ -46,7 +60,10 @@
 
         <naslov-delo-prerade required='false'>
             <naslov> </naslov>
-            <autor> </autor>
+            <autor>
+                <ime> </ime>
+                <prezime> </prezime>
+            </autor>
         </naslov-delo-prerade>
 
         <vrsta-autorskog-dela required='true'></vrsta-autorskog-dela>
@@ -58,7 +75,8 @@
                 <ime> </ime>
                 <prezime> </prezime>
                 <adresa>
-                    <ulica-broj> </ulica-broj>
+                    <ulica> </ulica>
+                    <broj> </broj>
                     <grad> </grad>
                     <postanski-kod> </postanski-kod>
                 </adresa>
@@ -85,5 +103,5 @@
 
         <datum-podnosenja required='true'> </datum-podnosenja>
         
-    </zahtev-za-unosenje-u-evidenciju-i-deponovanje-autorskih-dela>
+    </zahtev>
 </obrazac-a-1>
