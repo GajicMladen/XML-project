@@ -1,114 +1,77 @@
-<?xml version="1.0" encoding="UTF_8"?>
-<zahtev_za_priznanje_patenta>
-
-  <podaci_zavod>
-    <broj_prijave kod="21">P1234</broj_prijave>
-    <datum_prijema>01.10.2022.</datum_prijema>
-    <priznati_datum_podnosenja kod="22">07.11.2022.</priznati_datum_podnosenja>
-    <pecat_potpis>jtomic</pecat_potpis>
-    <adresa>
-      <drzava>Republika Srbija</drzava>
-      <ulica>Kneginje Ljubice</ulica>
-      <broj>5</broj>
-      <postanski_broj>11000</postanski_broj>
-      <mesto>Beograd</mesto>
-    </adresa>
-    <institucija>Zavod za intelektualnu svojinu</institucija>
-  </podaci_zavod>
-
-  <naziv jezik="srpski" broj_polja="1" kod="54">Sijalica</naziv>
-  <naziv jezik="engleski" broj_polja="1" kod="54">Lightbulb</naziv>
-
-  <podnosilac_prijave broj_polja="2" kod="71">
-    <podnosilac_pronalazac tip="boolean">true</podnosilac_pronalazac>
-    <ime>Jovan</ime>
-    <prezime>Tomic</prezime>
-    <poslovno_ime></poslovno_ime>
-
-    <adresa>
-      <drzava>Republika Srbija</drzava>
-      <ulica>Maršala Tita</ulica>
-      <broj>254</broj>
-      <postanski_broj>25230</postanski_broj>
-      <mesto>Kula</mesto>
-    </adresa>
-
-    <telefon>0612345678</telefon>
-    <faks>0212345678</faks>
-    <email>jtomic@gmail.com</email>
-
-    <drzavljanstvo napomena="Samo za fizička lica">Srpsko</drzavljanstvo>
-
-  </podnosilac_prijave>
-
-  <pronalazac broj_polja="3" kod="72">
-    <pronalazac_ne_zeli_da_bude_naveden tip="boolean"></pronalazac_ne_zeli_da_bude_naveden>
-
-    <ime></ime>
-    <prezime></prezime>
-
-    <adresa>
-      <drzava></drzava>
-      <ulica></ulica>
-      <broj></broj>
-      <postanski_broj></postanski_broj>
-      <mesto></mesto>
-    </adresa>
-
-    <telefon></telefon>
-    <faks></faks>
-    <email></email>
-  </pronalazac>
-
-  <punomocnik_ili_predstavnik broj_polja="4" kod="74">
-    <punomocnik_za_zastupanje tip="boolean">false</punomocnik_za_zastupanje>
-    <punomocnik_za_prijem_pismena tip="boolean">true</punomocnik_za_prijem_pismena>
-    <zajednicki_predstavnik tip="boolean">false</zajednicki_predstavnik>
-
-    <ime>Goran</ime>
-    <prezime>Markovic</prezime>
-    <poslovno_ime></poslovno_ime>
-
-    <adresa>
-      <ulica>Hadži Ruvimova</ulica>
-      <broj>12</broj>
-      <postanski_broj>21000</postanski_broj>
-      <mesto>Novi Sad</mesto>
-    </adresa>
-
-    <telefon>0612322233</telefon>
-    <email>goran@mail.com</email>
-  </punomocnik_ili_predstavnik>
-
-  <adresa broj_polja="5" opis="za_dostavljanje">
-    <ulica>Fruškogorska</ulica>
-    <broj>15</broj>
-    <postanski_broj>21000</postanski_broj>
-    <mesto>Novi Sad</mesto>
-  </adresa>
-
-  <dostava broj_polja="6" opis="elektronska" tip="boolean">true</dostava>
-  <dostava broj_polja="6" opis="papirna" tip="boolean">false</dostava>
-
-  <povezani_zahtev broj_polja="7">
-    <dopunska_prijava tip="boolean" kod="61">false</dopunska_prijava>
-    <izdvojena_prijava tip="boolean" kod="62">false</izdvojena_prijava>
-    <broj_prvobitne_prijave></broj_prvobitne_prijave>
-    <datum_podnosenja_prvobitne_prijave></datum_podnosenja_prvobitne_prijave>
-  </povezani_zahtev>
-
-  <zahtev_za_priznanje_prava_prvenstva_iz_ranijih_prijava broj_polja="8" kod="30">
-    <prijava>
-      <datum_prijave></datum_prijave>
-      <broj_prijave></broj_prijave>
-      <dvoslovna_oznaka></dvoslovna_oznaka>
-    </prijava>
-
-    <prijava>
-      <datum_prijave></datum_prijave>
-      <broj_prijave></broj_prijave>
-      <dvoslovna_oznaka></dvoslovna_oznaka>
-    </prijava>
-  </zahtev_za_priznanje_prava_prvenstva_iz_ranijih_prijava>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<zahtev_za_priznanje_patenta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="P-1.xsd">
+    <podaci_zavod>
+        <broj_prijave>П1234</broj_prijave>
+        <datum_prijema>2022-12-05</datum_prijema>
+        <datum_podnosenja>2022-12-10</datum_podnosenja>
+    </podaci_zavod>
+    <naziv_pronalaska>
+        <naziv lang="sr">Moj novi patent</naziv>
+        <naziv lang="en">My new patent</naziv>
+    </naziv_pronalaska>
+    <podnosilac_prijave>
+        <fizicko_lice> 
+            <ime>Jovan</ime>
+            <prezime>TOMIĆ</prezime>
+        </fizicko_lice>
+        <drzavljanstvno>Srpsko</drzavljanstvno>
+        <lokacija>
+            <ulica>M Tita</ulica>
+            <broj>148</broj>
+            <postanski_broj>25230</postanski_broj>
+            <mesto>Kula</mesto>
+            <drzava>Srbija</drzava>
+        </lokacija>
+        <kontakt>
+            <broj_telefona>060123321</broj_telefona>
+            <e-mail>jtomic@mail.com</e-mail>
+            <broj_faksa>060123321</broj_faksa>
+        </kontakt>
+        <podnosilac_pronalazac>false</podnosilac_pronalazac>
+    </podnosilac_prijave>
+    <podaci_o_pronalazacu>
+        <pronalazac_naveden>true</pronalazac_naveden>
+        <pronalazac>
+            <fizicko_lice>
+                <ime>Pera</ime>
+                <prezime>PETROVIĆ</prezime>
+            </fizicko_lice>
+            <lokacija>
+                <ulica>Miše Dimitrijevića</ulica>
+                <broj>5</broj>
+                <postanski_broj>21000</postanski_broj>
+                <mesto>Novi Sad</mesto>
+                <drzava>Srbija</drzava>
+            </lokacija>
+            <kontakt>
+                <broj_telefona>060555333</broj_telefona>
+                <e-mail>pera@mail.com</e-mail>
+                <broj_faksa>060555333</broj_faksa>
+            </kontakt>
+        </pronalazac>
+    </podaci_o_pronalazacu>
+    <punomocnik>
+        <funkcija>
+            <punomocnik_zastupanje>false</punomocnik_zastupanje>
+            <punomocnik_prijem_pismena>false</punomocnik_prijem_pismena>
+            <zajednicki_predstavnik>false</zajednicki_predstavnik>
+        </funkcija>
+    </punomocnik>
+    <adresa_za_dostavljanje>
+        <ulica>Bulevar Evrope</ulica>
+        <broj>12</broj>
+        <postanski_broj>21000</postanski_broj>
+        <mesto>Novi Sad</mesto>
+    </adresa_za_dostavljanje>
+    <nacin_dostavljanja>
+        <elektronski>true</elektronski>
+        <papirno>false</papirno>
+    </nacin_dostavljanja>
+    <dopuna>
+        <dopunska_prijava>false</dopunska_prijava>
+        <izdvojena_prijava>false</izdvojena_prijava>
+    </dopuna>
+    <priznanje_prava_prvenstva_iz_ranijih_prijava>
+    </priznanje_prava_prvenstva_iz_ranijih_prijava>
 </zahtev_za_priznanje_patenta>
