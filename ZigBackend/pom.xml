@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -9,29 +9,19 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>xml-tim11</artifactId>
+	<artifactId>ZigBackend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>xml-tim11</name>
-	<description>timski projekat za XML </description>
+	<name>ZigBackend</name>
+	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
@@ -45,25 +35,6 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
-
-		<!-- Spring Security -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- JWT -->
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>0.6.0</version>
-		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -81,6 +52,7 @@
 			<optional>true</optional>
 		</dependency>
 
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -93,7 +65,7 @@
 			<scope>test</scope>
 		</dependency>
 
-<!--		DB -->
+		<!--		DB -->
 		<dependency>
 			<groupId>net.sf.xmldb-org</groupId>
 			<artifactId>xmldb-api</artifactId>
@@ -136,9 +108,9 @@
 				<configuration>
 					<packageName>Z1Classes</packageName>
 					<sources>
-						<source>src/main/resources/xsdSchemes/Z1.xsd</source>
+						<source>src/main/resources/Z1.xsd</source>
 					</sources>
-					<outputDirectory>${basedir}/src/main/java/com/example/xmltim11/gen</outputDirectory>
+					<outputDirectory>${basedir}/src/main/java/com/example/ZigBackend/gen</outputDirectory>
 					<clearOutputDir>true</clearOutputDir>
 				</configuration>
 			</plugin>

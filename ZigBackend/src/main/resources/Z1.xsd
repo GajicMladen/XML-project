@@ -13,9 +13,8 @@
                 <xs:element ref="zatrazeno_pravo_prvenstva"/>
                 <xs:element ref="placanje"/>
                 <xs:element ref="prilozi"/>
-		
-            	<xs:attribute name="broj_zahteva" type="xs:string"/>
             </xs:sequence>
+            <xs:attribute name="broj_zahteva" type="xs:string"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="adresa">
