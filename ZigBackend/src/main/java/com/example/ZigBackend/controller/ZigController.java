@@ -1,18 +1,22 @@
 package com.example.ZigBackend.controller;
 
 import com.example.ZigBackend.service.ZigService;
+import com.example.ZigBackend.transformer.PDFTransformer;
 import com.example.ZigBackend.utils.AuthenticationUtilities;
 import com.example.ZigBackend.gen.Z1Classes.*;
 import com.example.ZigBackend.utils.AuthenticationUtilities;
 import com.example.ZigBackend.utils.AuthenticationUtilities.ConnectionProperties;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.xml.sax.SAXException;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -25,6 +29,11 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.InputStreamResource;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 
 @Controller
@@ -60,5 +69,41 @@ public class ZigController {
             return new ResponseEntity<>("Jaxb err",HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(zahtevZaPriznanjeZiga.toString(),HttpStatus.OK);
+    }
+
+    @GetMapping(value = "testPDF")
+    public ResponseEntity<String> testPDF(){
+        String msg = "";
+        try {
+            PDFTransformer pdfTransformer = new PDFTransformer();
+            pdfTransformer.generatePDF();
+        } catch (IOException e) {
+            msg += "IO exception\n";
+            msg += e.toString();
+            return new ResponseEntity<>(msg , HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            msg += "GEN exception\n";
+            msg += e.toString();
+            return new ResponseEntity<>(msg , HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>("OK" , HttpStatus.OK);
+    }
+    @GetMapping("/downloadPDF")
+    public ResponseEntity<Resource> downloadFile(){
+        try {
+            File pdfFile = zigService.getTestPDFFile();
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(pdfFile));
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + pdfFile.getName())
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .contentLength(pdfFile.length())
+                    .body(resource);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
 }
