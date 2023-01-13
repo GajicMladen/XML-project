@@ -15,6 +15,7 @@
                 <xs:element ref="prilozi"/>
             </xs:sequence>
             <xs:attribute name="broj_zahteva" type="xs:string"/>
+            <xs:attribute name="datum_podnosenja" type="xs:string"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="adresa">

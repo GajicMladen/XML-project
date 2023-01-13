@@ -1,39 +1,25 @@
 package com.example.ZigBackend.controller;
 
+import com.example.ZigBackend.rdf.FusekiDB;
+import com.example.ZigBackend.rdf.FusekiReader;
 import com.example.ZigBackend.service.ZigService;
 import com.example.ZigBackend.transformer.PDFTransformer;
-import com.example.ZigBackend.utils.AuthenticationUtilities;
 import com.example.ZigBackend.gen.Z1Classes.*;
-import com.example.ZigBackend.utils.AuthenticationUtilities;
-import com.example.ZigBackend.utils.AuthenticationUtilities.ConnectionProperties;
-import org.exist.xmldb.EXistResource;
+import com.example.ZigBackend.utils.AuthenticationUtilitiesExist.ConnectionProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.xml.sax.SAXException;
-import org.xmldb.api.DatabaseManager;
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.Database;
-import org.xmldb.api.base.XMLDBException;
-import org.xmldb.api.modules.CollectionManagementService;
-import org.xmldb.api.modules.XMLResource;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.InputStreamResource;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 
 @Controller
@@ -69,6 +55,15 @@ public class ZigController {
             return new ResponseEntity<>("Jaxb err",HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(zahtevZaPriznanjeZiga.toString(),HttpStatus.OK);
+    }
+    @GetMapping(value = "getAllFusekiSPO")
+    public ResponseEntity<String> getAllFuseki() throws IOException {
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+// write something to the outputStream
+        String res = FusekiReader.readAllDataFromDatabaseJSON();
+//        InputStreamResource inputStreamResource = new InputStreamResource(new ByteArrayInputStream(outputStream.toByteArray()));
+//        ResponseEntity<InputStreamResource> response = new ResponseEntity<>(inputStreamResource, HttpStatus.OK);
+        return new ResponseEntity<>(res,HttpStatus.OK);
     }
 
     @GetMapping(value = "testPDF")
