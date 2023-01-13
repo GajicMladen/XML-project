@@ -1,8 +1,10 @@
 package com.example.ZigBackend.service;
 
 import com.example.ZigBackend.db.ZigDB;
+import com.example.ZigBackend.transformer.HTMLTransformer;
 import com.example.ZigBackend.transformer.PDFTransformer;
 import org.exist.xmldb.EXistResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -52,5 +54,16 @@ public class ZigService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public File getTestHTMLFile(){
+        try {
+            HTMLTransformer htmlTransformer = new HTMLTransformer();
+            return htmlTransformer.generateHTML( HTMLTransformer.INPUT_FILE,HTMLTransformer.XSL_FILE);
+        } catch (IOException e) {
+            throw new RuntimeException("IO exception" +e.toString());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -102,6 +102,7 @@ public class PDFTransformer {
         System.out.println(path);
         return null;
     }
+
     public File createNewFile(String name) throws IOException {
         System.out.println("Generisanje novog fajla u resurse");
         URL url = this.getClass().getClassLoader().getResource("");

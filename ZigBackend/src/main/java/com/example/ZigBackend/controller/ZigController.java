@@ -106,4 +106,21 @@ public class ZigController {
             return ResponseEntity.internalServerError().body(null);
         }
     }
+    @GetMapping("/downloadHTML")
+    public ResponseEntity<Resource> downloadHTML(){
+        try {
+            File htmlFIle = zigService.getTestHTMLFile();
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(htmlFIle));
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + htmlFIle.getName())
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .contentLength(htmlFIle.length())
+                    .body(resource);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
 }
