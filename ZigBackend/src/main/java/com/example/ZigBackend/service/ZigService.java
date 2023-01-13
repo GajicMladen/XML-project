@@ -2,6 +2,7 @@ package com.example.ZigBackend.service;
 
 import com.example.ZigBackend.db.ZigDB;
 import com.example.ZigBackend.transformer.HTMLTransformer;
+import com.example.ZigBackend.rdf.FusekiDB;
 import com.example.ZigBackend.transformer.PDFTransformer;
 import org.exist.xmldb.EXistResource;
 import org.springframework.core.io.InputStreamResource;
@@ -37,8 +38,9 @@ public class ZigService {
 
     public ZahtevZaPriznanjeZiga saveTestXMLinDB() throws FileNotFoundException, JAXBException {
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getTestZahtevZaPrizanjeZiga();
-        zahtevZaPriznanjeZiga.setBrojZahteva("Z1_MG");
+//        zahtevZaPriznanjeZiga.setBrojZahteva("Z1_MG");
         ZigDB.save(zahtevZaPriznanjeZiga);
+        FusekiDB.save(zahtevZaPriznanjeZiga);
         return zahtevZaPriznanjeZiga;
     }
 

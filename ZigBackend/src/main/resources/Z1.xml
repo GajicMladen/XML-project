@@ -2,6 +2,10 @@
 <zahtev_za_priznanje_ziga xmlns="http://www.tim777.rs/dokumentZ1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.tim777.rs/dokumentZ1 file:/C:/Users/PC/Desktop/fax/VII_semestar/XML/XML-project/KT2/Z1.xsd"
+      xmlns:addr="http://www.tim777.rs/rdf/"
+      xmlns:pred="http://www.tim777.rs/rdf/predicate/"
+      broj_zahteva="Ž-23333333/19"
+      datum_podnosenja="19.01.2023."
 >
     <podnosilac xsi:type='TFizicko_lice'>
         <adresa>
@@ -15,10 +19,10 @@
             <email>mladen@dmsak.com</email>
             <fax>06530321</fax>
         </kontakt>
-        <ime>'Mladen'</ime>
-        <prezime>'Gajic'</prezime>
+        <ime>Mladen</ime>
+        <prezime>Gajic</prezime>
     </podnosilac>
-    <punomocnik xsi:type='TPravno_lice'>
+    <punomocnik xsi:type='TFizicko_lice'>
         <adresa>
             <drzava>Srbija</drzava>
             <postanski_broj>21000</postanski_broj>
@@ -30,7 +34,8 @@
             <email>korpa@dsmak.com</email>
             <fax>560061032</fax>
         </kontakt>
-        <Naziv>Korpa d.o.o.</Naziv>
+        <ime>Marko</ime>
+        <prezime>Markovic</prezime>
     </punomocnik>
     <opis_ziga>
         <tip_ziga>individualni_zig</tip_ziga>

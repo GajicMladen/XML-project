@@ -2,10 +2,9 @@ package com.example.ZigBackend.db;
 
 import com.example.ZigBackend.gen.Z1Classes.ZahtevZaPriznanjeZiga;
 import com.example.ZigBackend.marshal.Marshal;
-import com.example.ZigBackend.utils.AuthenticationUtilities;
+import com.example.ZigBackend.utils.AuthenticationUtilitiesExist;
 import com.example.ZigBackend.utils.DBSetUp;
 import org.exist.xmldb.EXistResource;
-import org.springframework.util.ResourceUtils;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.CollectionManagementService;
@@ -14,7 +13,6 @@ import org.xmldb.api.modules.XPathQueryService;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -25,7 +23,7 @@ public class ZigDB {
 
     public static int getNumberOfRequests() {
         try {
-            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+            AuthenticationUtilitiesExist.ConnectionProperties conn = AuthenticationUtilitiesExist.loadProperties();
             String collectionId = DBSetUp.setupDBConnection(conn);
             Collection col = getOrCreateCollection(collectionId, conn);
             return col.getResourceCount();
@@ -38,7 +36,7 @@ public class ZigDB {
     public static void save(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga) {
         OutputStream marshaledPatent = Marshal.marshalZig(zahtevZaPriznanjeZiga);
         try {
-            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+            AuthenticationUtilitiesExist.ConnectionProperties conn = AuthenticationUtilitiesExist.loadProperties();
             String collectionId = DBSetUp.setupDBConnection(conn);
             String documentId = formatNameOfRequestForZig(zahtevZaPriznanjeZiga.getBrojZahteva(), ".xml");
             Collection col = getOrCreateCollection(collectionId, conn);
@@ -52,7 +50,7 @@ public class ZigDB {
 
     public static ZahtevZaPriznanjeZiga getZahtevZaPriznanjeZiga(String brojZahteva) {
         try {
-            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+            AuthenticationUtilitiesExist.ConnectionProperties conn = AuthenticationUtilitiesExist.loadProperties();
             String collectionId = DBSetUp.setupDBConnection(conn);
             Collection col = getOrCreateCollection(collectionId, conn);
             XMLResource res = (XMLResource) col.getResource(formatNameOfRequestForZig(brojZahteva, ".xml"));
@@ -70,7 +68,7 @@ public class ZigDB {
 
     public static List<ZahtevZaPriznanjeZiga> getAllByFilter(String filter) {
         try {
-            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+            AuthenticationUtilitiesExist.ConnectionProperties conn = AuthenticationUtilitiesExist.loadProperties();
             String collectionId = DBSetUp.setupDBConnection(conn);
             Collection col = getOrCreateCollection(collectionId, conn);
 
@@ -113,11 +111,11 @@ public class ZigDB {
     }
 
 
-    public static org.xmldb.api.base.Collection getOrCreateCollection(String collectionUri, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
+    public static org.xmldb.api.base.Collection getOrCreateCollection(String collectionUri, AuthenticationUtilitiesExist.ConnectionProperties conn) throws XMLDBException {
         return getOrCreateCollection(collectionUri, 0, conn);
     }
 
-    private static org.xmldb.api.base.Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
+    private static org.xmldb.api.base.Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset, AuthenticationUtilitiesExist.ConnectionProperties conn) throws XMLDBException {
 
         org.xmldb.api.base.Collection col = DatabaseManager.getCollection(conn.uri + collectionUri, conn.user, conn.password);
         // create the collection if it does not exist
