@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<zahtev_za_priznanje_patenta>
+    <podaci_zavod>
+        <broj_prijave>P1111</broj_prijave>
+        <datum_prijema>2022-12-05</datum_prijema>
+        <datum_podnosenja>2022-12-10</datum_podnosenja>
+    </podaci_zavod>
+    <naziv_pronalaska>
+        <naziv lang="sr">Moj novi patent</naziv>
+        <naziv lang="en">My new patent</naziv>
+    </naziv_pronalaska>
+    <podnosilac_prijave>
+        <poslovno_ime>FIRMA DOO</poslovno_ime>
+        <lokacija>
+            <ulica>M Tita</ulica>
+            <broj>148</broj>
+            <postanski_broj>25230</postanski_broj>
+            <mesto>Kula</mesto>
+            <drzava>Srbija</drzava>
+        </lokacija>
+        <kontakt>
+            <broj_telefona>060123321</broj_telefona>
+            <e-mail>jtomic@mail.com</e-mail>
+            <broj_faksa>060123321</broj_faksa>
+        </kontakt>
+        <podnosilac_pronalazac>false</podnosilac_pronalazac>
+    </podnosilac_prijave>
+    <podaci_o_pronalazacu>
+        <pronalazac_naveden>true</pronalazac_naveden>
+        <pronalazac>
+            <fizicko_lice>
+                <ime>Pera</ime>
+                <prezime>PETROVIĆ</prezime>
+            </fizicko_lice>
+            <lokacija>
+                <ulica>Miše Dimitrijevića</ulica>
+                <broj>5</broj>
+                <postanski_broj>21000</postanski_broj>
+                <mesto>Novi Sad</mesto>
+                <drzava>Srbija</drzava>
+            </lokacija>
+            <kontakt>
+                <broj_telefona>060555333</broj_telefona>
+                <e-mail>pera@mail.com</e-mail>
+                <broj_faksa>060555333</broj_faksa>
+            </kontakt>
+        </pronalazac>
+    </podaci_o_pronalazacu>
+    <punomocnik>
+        <funkcija>
+            <punomocnik_zastupanje>false</punomocnik_zastupanje>
+            <punomocnik_prijem_pismena>false</punomocnik_prijem_pismena>
+            <zajednicki_predstavnik>true</zajednicki_predstavnik>
+        </funkcija>
+        <fizicko_lice>
+            <ime>Nikola</ime>
+            <prezime>MARKOVIĆ</prezime>
+        </fizicko_lice>
+        <adresa>
+            <ulica>Sime Šolaje</ulica>
+            <broj>22</broj>
+            <postanski_broj>11000</postanski_broj>
+            <mesto>Beograd</mesto>
+        </adresa>
+        <kontakt>
+            <broj_telefona>060111111</broj_telefona>
+            <e-mail>nikola@mail.com</e-mail>
+        </kontakt>
+    </punomocnik>
+    <adresa_za_dostavljanje>
+        <ulica>Bulevar Evrope</ulica>
+        <broj>12</broj>
+        <postanski_broj>21000</postanski_broj>
+        <mesto>Novi Sad</mesto>
+    </adresa_za_dostavljanje>
+    <nacin_dostavljanja>
+        <elektronski>true</elektronski>
+        <papirno>false</papirno>
+    </nacin_dostavljanja>
+    <dopuna>
+        <dopunska_prijava>true</dopunska_prijava>
+        <izdvojena_prijava>false</izdvojena_prijava>
+        <broj_osnovne_prijave>P4258</broj_osnovne_prijave>
+        <datum_osnovne_prijave>2022-12-22</datum_osnovne_prijave>
+    </dopuna>
+    <priznanje_prava_prvenstva_iz_ranijih_prijava>
+        <detalji_ranije_prijave>
+            <datum_podnosenja>2022-12-22</datum_podnosenja>
+            <broj_prijave>P0001</broj_prijave>
+            <dvoslovna_oznaka>NL</dvoslovna_oznaka>
+        </detalji_ranije_prijave>
+        <detalji_ranije_prijave>
+            <datum_podnosenja>2022-12-22</datum_podnosenja>
+            <broj_prijave>P0002</broj_prijave>
+            <dvoslovna_oznaka>IS</dvoslovna_oznaka>
+        </detalji_ranije_prijave>
+    </priznanje_prava_prvenstva_iz_ranijih_prijava>
+</zahtev_za_priznanje_patenta>

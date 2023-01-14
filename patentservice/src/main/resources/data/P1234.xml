@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zahtev_za_priznanje_patenta xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="P-1.xsd">
+    <podaci_zavod>
+        <broj_prijave>P1234</broj_prijave>
+        <datum_prijema>2022-12-05</datum_prijema>
+        <datum_podnosenja>2022-12-10</datum_podnosenja>
+    </podaci_zavod>
+    <naziv_pronalaska>
+        <naziv lang="sr">Moj novi patent</naziv>
+        <naziv lang="en">My new patent</naziv>
+    </naziv_pronalaska>
+    <podnosilac_prijave>
+        <fizicko_lice> 
+            <ime>Jovan</ime>
+            <prezime>TOMIĆ</prezime>
+        </fizicko_lice>
+        <drzavljanstvo>Srpsko</drzavljanstvo>
+        <lokacija>
+            <ulica>M Tita</ulica>
+            <broj>148</broj>
+            <postanski_broj>25230</postanski_broj>
+            <mesto>Kula</mesto>
+            <drzava>Srbija</drzava>
+        </lokacija>
+        <kontakt>
+            <broj_telefona>060123321</broj_telefona>
+            <e-mail>jtomic@mail.com</e-mail>
+            <broj_faksa>060123321</broj_faksa>
+        </kontakt>
+        <podnosilac_pronalazac>false</podnosilac_pronalazac>
+    </podnosilac_prijave>
+    <podaci_o_pronalazacu>
+        <pronalazac_naveden>true</pronalazac_naveden>
+        <pronalazac>
+            <fizicko_lice>
+                <ime>Pera</ime>
+                <prezime>PETROVIĆ</prezime>
+            </fizicko_lice>
+            <lokacija>
+                <ulica>Miše Dimitrijevića</ulica>
+                <broj>5</broj>
+                <postanski_broj>21000</postanski_broj>
+                <mesto>Novi Sad</mesto>
+                <drzava>Srbija</drzava>
+            </lokacija>
+            <kontakt>
+                <broj_telefona>060555333</broj_telefona>
+                <e-mail>pera@mail.com</e-mail>
+                <broj_faksa>060555333</broj_faksa>
+            </kontakt>
+        </pronalazac>
+    </podaci_o_pronalazacu>
+    <punomocnik>
+        <funkcija>
+            <punomocnik_zastupanje>false</punomocnik_zastupanje>
+            <punomocnik_prijem_pismena>false</punomocnik_prijem_pismena>
+            <zajednicki_predstavnik>false</zajednicki_predstavnik>
+        </funkcija>
+    </punomocnik>
+    <adresa_za_dostavljanje>
+        <ulica>Bulevar Evrope</ulica>
+        <broj>12</broj>
+        <postanski_broj>21000</postanski_broj>
+        <mesto>Novi Sad</mesto>
+    </adresa_za_dostavljanje>
+    <nacin_dostavljanja>
+        <elektronski>true</elektronski>
+        <papirno>false</papirno>
+    </nacin_dostavljanja>
+    <dopuna>
+        <dopunska_prijava>false</dopunska_prijava>
+        <izdvojena_prijava>false</izdvojena_prijava>
+    </dopuna>
+    <priznanje_prava_prvenstva_iz_ranijih_prijava>
+    </priznanje_prava_prvenstva_iz_ranijih_prijava>
+</zahtev_za_priznanje_patenta>
