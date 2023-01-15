@@ -26,7 +26,7 @@
 									<fo:table-cell border="solid" border-width="2px" number-columns-spanned="2" margin-left="3px">
 										<fo:block text-align="start"  padding-top="4px" font-size="10pt" margin-bottom="15px">Broj prijave</fo:block>
 										<fo:block margin-top="4px">
-											<xsl:value-of select="//broj_prijave" />
+											<xsl:value-of select="//podaci_zavod/broj_prijave" />
 										</fo:block>
 									</fo:table-cell>
 								</fo:table-row>
