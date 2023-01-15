@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="a-fo.xsl"?>
+<?xml-stylesheet type="text/xsl" href="a-xhtml.xsl"?>
+<obrazac-a-1
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="a-1 file:/C:/Users/djord/Documents/Fakultet/7_semestar/XML%20i%20web%20servisi/Projekat/XML-project/KT2/A1.xsd">
+    <zavod>
+        <naziv>Zavod za intelektualnu svojinu</naziv>
+        <adresa>
+            <ulica>Kneginje Ljubice</ulica>
+            <broj>5</broj>
+            <grad>Beograd</grad>
+            <postanski-kod>11000</postanski-kod>
+        </adresa>
+    </zavod>
+    <zahtev naslov="Zahtev za unosenje u evidenciju i deponovanje autorskih dela">
+        <podnosilac>
+        	<lice xsi:type="t-fizicko-lice">
+        		<telefon>0648825448</telefon>
+	            <email>da@gmail.com</email>
+        		<ime>Djordje</ime>                   
+	            <prezime>Jovanovic</prezime>
+	            <adresa>
+	                <ulica>Karadjordjeva</ulica>
+	                <broj>4</broj>
+	                <grad>Ljubovija</grad>
+	                <postanski-kod>15320</postanski-kod>
+	            </adresa>
+	            <drzavljanstvo>Srpsko</drzavljanstvo>	            
+        	</lice>        	                    
+        </podnosilac>
+        <pseudonim-znak-autora>Pseudonim</pseudonim-znak-autora>
+        <punomocnik>
+            <ime></ime>
+            <prezime></prezime>
+            <adresa>
+                <ulica></ulica>
+                <broj>999999</broj>
+                <grad></grad>
+                <postanski-kod>40000</postanski-kod>
+            </adresa>
+        </punomocnik>
+        <naslov-autorskog-dela>
+            <naslov>Naslov dela</naslov>
+            <alternativni-naslov>Alternativni naslov dela</alternativni-naslov>
+        </naslov-autorskog-dela>
+        <naslov-delo-prerade>
+            <naslov></naslov>
+            <autor>
+                <ime></ime>
+                <prezime></prezime>
+            </autor>
+        </naslov-delo-prerade>
+        <vrsta-autorskog-dela>Knjizevno delo</vrsta-autorskog-dela>
+        <forma-zapisa-autorskog-dela>Stampani tekst</forma-zapisa-autorskog-dela>
+        <podaci-o-autoru-nepodnosilac>
+            <autor>
+                <ime></ime>
+                <prezime></prezime>
+            </autor>
+        </podaci-o-autoru-nepodnosilac>
+        <autorsko-delo-stvoreno-radnim-odnosom>Delo nije stvoreno u radnom odnosu.</autorsko-delo-stvoreno-radnim-odnosom>
+        <nacin-koriscenja>Po potrebi</nacin-koriscenja>
+        <prilozi>
+            <opis-autorskog-dela></opis-autorskog-dela>
+            <primer-autorskog-dela></primer-autorskog-dela>
+        </prilozi>
+        <broj-prijave>A-1</broj-prijave>
+        <datum-podnosenja>11.12.2022.</datum-podnosenja>
+    </zahtev>
+</obrazac-a-1>
