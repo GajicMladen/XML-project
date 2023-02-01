@@ -13,31 +13,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
-/**
- * <p>Java class for t-fizicko-lice complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="t-fizicko-lice"&gt;
- *   &lt;complexContent&gt;
- *     &lt;extension base="{a-1}t-lice"&gt;
- *       &lt;sequence&gt;
- *         &lt;element name="ime" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="prezime" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="adresa" type="{a-1}t-adresa"/&gt;
- *         &lt;element name="drzavljanstvo" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *       &lt;/sequence&gt;
- *     &lt;/extension&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
- * 
- * 
- */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t-fizicko-lice", propOrder = {
+@XmlType(name = "t_fizicko_lice", propOrder = {
     "ime",
     "prezime",
     "adresa",

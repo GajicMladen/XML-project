@@ -34,14 +34,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t-autor-preminuo", propOrder = {
+@XmlType(name = "t_autor_preminuo", propOrder = {
     "godinaSmrti"
 })
 public class TAutorPreminuo
     extends TAutor
 {
 
-    @XmlElement(name = "godina-smrti")
+    @XmlElement(name = "godina_smrti")
     protected int godinaSmrti;
 
     /**

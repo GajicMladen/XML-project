@@ -47,7 +47,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t-adresa", propOrder = {
+@XmlType(name = "t_adresa", propOrder = {
     "ulica",
     "broj",
     "grad",
@@ -62,7 +62,7 @@ public class TAdresa {
     protected BigInteger broj;
     @XmlElement(required = true)
     protected String grad;
-    @XmlElement(name = "postanski-kod")
+    @XmlElement(name = "postanski_kod")
     protected int postanskiKod;
 
     /**

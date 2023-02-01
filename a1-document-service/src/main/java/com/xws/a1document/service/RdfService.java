@@ -32,11 +32,13 @@ public class RdfService {
 	private Model getRdfModel(ObrazacA1 obrazac) {
 		Model model  = ModelFactory.createDefaultModel();
 		Resource resource = model.createResource(A_NAMESPACE + "/" + obrazac.getZahtev().getBrojPrijave().getValue());
-		addTripletToModel(model, resource, "broj-prijave", obrazac.getZahtev().getBrojPrijave().getValue());
-		addTripletToModel(model, resource, "datum-podnosenja", obrazac.getZahtev().getDatumPodnosenja().getValue());
-		addTripletToModel(model, resource, "email-podnosilac", obrazac.getZahtev().getPodnosilac().getLice().getEmail());
-		addTripletToModel(model, resource, "telefon-podnosilac", obrazac.getZahtev().getPodnosilac().getLice().getTelefon());
-		addTripletToModel(model, resource, "naslov-dela", obrazac.getZahtev().getNaslovAutorskogDela().getNaslov().getValue());       
+		addTripletToModel(model, resource, "broj_prijave", obrazac.getZahtev().getBrojPrijave().getValue());
+		addTripletToModel(model, resource, "datum_podnosenja", obrazac.getZahtev().getDatumPodnosenja().getValue());
+		addTripletToModel(model, resource, "email_podnosilac", obrazac.getZahtev().getPodnosilac().getLice().getEmail());
+		addTripletToModel(model, resource, "telefon_podnosilac", obrazac.getZahtev().getPodnosilac().getLice().getTelefon());
+		addTripletToModel(model, resource, "naslov_dela", obrazac.getZahtev().getNaslovAutorskogDela().getNaslov().getValue());
+		addTripletToModel(model, resource, "vrsta_dela", obrazac.getZahtev().getVrstaAutorskogDela().getValue());
+		addTripletToModel(model, resource, "forma_zapisa", obrazac.getZahtev().getFormaZapisaAutorskogDela().getValue());
         return model;
 	}
 	
