@@ -1,146 +1,239 @@
 package main.java.com.xws.a1document.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import main.java.com.xws.a1document.dto.ObrazacA1DTO;
+import main.java.com.xws.a1document.repository.A1Repository;
 import main.java.com.xws.a1document.xml.model.ObrazacA1;
-import main.java.com.xws.a1document.xml.model.TAdresa;
-import main.java.com.xws.a1document.xml.model.TAutor;
-import main.java.com.xws.a1document.xml.model.TAutorPreminuo;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.AutorskoDeloStvorenoRadnimOdnosom;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.BrojPrijave;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.DatumPodnosenja;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.FormaZapisaAutorskogDela;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.NacinKoriscenja;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.NaslovAutorskogDela;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.NaslovAutorskogDela.AlternativniNaslov;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.NaslovAutorskogDela.Naslov;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.NaslovDeloPrerade;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.PodaciOAutoruNepodnosilac;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.Podnosilac;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.Prilozi;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.PseudonimZnakAutora;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.Punomocnik;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zahtev.VrstaAutorskogDela;
+import main.java.com.xws.a1document.xml.model.ObrazacA1.Zavod;
 import main.java.com.xws.a1document.xml.model.TAutorZiv;
 import main.java.com.xws.a1document.xml.model.TFizickoLice;
-import main.java.com.xws.a1document.xml.model.TPravnoLice;
+
 
 @Service
 public class A1Service {
 	
-	public void printObrazac(ObrazacA1 obrazac) {
-		printZavod(obrazac.getZavod());
-		
-		printZahtev(obrazac.getZahtev());
-	}
+	@Autowired
+	private A1Repository a1Repository;
 	
-	private void printZavod(ObrazacA1.Zavod zavod) {
-		System.out.println("Zavod - " + zavod.getNaziv() + "\n");
-		printAdresa(zavod.getAdresa());
-	}
+	@Autowired
+	private RdfService rdfService;
 	
-	private void printAdresa(TAdresa adresa) {
-		System.out.println("\tUlica: " + adresa.getUlica());
-		System.out.println("\tBroj: " + adresa.getBroj());
-		System.out.println("\tGrad: " + adresa.getGrad());
-		System.out.println("\tPostanski kod: " + adresa.getPostanskiKod());
-	}
-	
-	private void printZahtev(ObrazacA1.Zahtev zahtev) {
-		System.out.println("Zahtev - " + zahtev.getNaslov());
-		printPodnosilac(zahtev.getPodnosilac());
-		printPseudonim(zahtev.getPseudonimZnakAutora());
-		printPunomocnik(zahtev.getPunomocnik());
-		printNaslov(zahtev.getNaslovAutorskogDela());
-		printDeloPrerade(zahtev.getNaslovDeloPrerade());
-		printVrstaDela(zahtev.getVrstaAutorskogDela());
-		printFormaZapisa(zahtev.getFormaZapisaAutorskogDela());
-		printAutorNepodnosilac(zahtev.getPodaciOAutoruNepodnosilac());
-		printRadniOdnos(zahtev.getAutorskoDeloStvorenoRadnimOdnosom());
-		printNacinKoriscenja(zahtev.getNacinKoriscenja());
-		printBrojPrijave(zahtev.getBrojPrijave());
-		printDatumPodnosenja(zahtev.getDatumPodnosenja());
-	}
-	
-	private void printPodnosilac(ObrazacA1.Zahtev.Podnosilac podnosilac) {
-		System.out.println("Podnosilac");
-		if (podnosilac.getLice() instanceof TFizickoLice) {
-			System.out.println("\tFizicko lice");
-			TFizickoLice fizickoLice = (TFizickoLice) podnosilac.getLice();
-			System.out.println("\tIme: " + fizickoLice.getIme());
-			System.out.println("\tPrezime: " + fizickoLice.getPrezime());
-			printAdresa(fizickoLice.getAdresa());
-			System.out.println("\tDrzavljanstvo: " + fizickoLice.getDrzavljanstvo());
-			System.out.println("\tTelefon: " + fizickoLice.getTelefon());
-			System.out.println("\tE-mail: " + fizickoLice.getEmail());
-			
-		} else if (podnosilac.getLice() instanceof TPravnoLice) {
-			System.out.println("\tPravno lice");
-			TPravnoLice pravnoLice = (TPravnoLice) podnosilac.getLice(); 
-			System.out.println("\tPoslovno ime: " + pravnoLice.getPoslovnoIme());
-			printAdresa(pravnoLice.getSediste().getAdresa());
-			System.out.println("\tTelefon: " + pravnoLice.getTelefon());
-			System.out.println("\tE-mail: " + pravnoLice.getEmail());
+	public ObrazacA1 getObrazacA1(ObrazacA1DTO o) {
+		ObrazacA1 obrazac = new ObrazacA1();
+		Zavod zavod = new Zavod();
+		zavod.setNaziv(o.getZavod().getNaziv());
+		zavod.setAdresa(o.getZavod().getAdresa());
+		obrazac.setZavod(zavod);
+		Zahtev zahtev = new Zahtev();
+		zahtev.setPodnosilac(getPodnosilac(o));
+		if (zahtev.getPodnosilac().getLice() instanceof TFizickoLice) {
+			TFizickoLice lice = (TFizickoLice) zahtev.getPodnosilac().getLice();
+			System.out.println(lice.getIme());
 		}
-		
+		zahtev.setPseudonimZnakAutora(getPseudonim(o));
+		zahtev.setAutorskoDeloStvorenoRadnimOdnosom(getRadniOdnos(o));
+		zahtev.setDatumPodnosenja(getDatumPodnosenja(o));
+		zahtev.setFormaZapisaAutorskogDela(getFormaZapisa(o));
+		zahtev.setBrojPrijave(getBrojPrijave());
+		zahtev.setNacinKoriscenja(getNacinKorscenja(o));
+		zahtev.setNaslov("Zahtev za unosenje u evidenciju i deponovanje autorskih dela");
+		zahtev.setNaslovAutorskogDela(getNaslovDela(o));
+		zahtev.setNaslovDeloPrerade(getDeloPrerade(o));
+		zahtev.setPodaciOAutoruNepodnosilac(getAutorPodaci(o));
+		zahtev.setPrilozi(getPrilozi(o));
+		zahtev.setPunomocnik(getPunomocnik(o));
+		zahtev.setVrstaAutorskogDela(getVrsta(o));
+		zahtev.setStatus("PENDING");
+		obrazac.setZahtev(zahtev);
+		return obrazac;
 	}
 	
-	private void printPseudonim(ObrazacA1.Zahtev.PseudonimZnakAutora pseudonim) {
-		System.out.println("Pseudonim - " + pseudonim.getValue());
+	private VrstaAutorskogDela getVrsta(ObrazacA1DTO o) {
+		VrstaAutorskogDela vrsta = new VrstaAutorskogDela();
+		vrsta.setValue(o.getZahtev().getVrstaAutorskogDela().getValue());
+		System.out.println(vrsta.getValue());
+		return vrsta;
 	}
-	
-	private void printPunomocnik(ObrazacA1.Zahtev.Punomocnik punomocnik) {
-		if (punomocnik.getIme().equals("")) {
-			System.out.println("Punomocnik - Podnosilac je autor, nema punomocnika.");
+
+	private Punomocnik getPunomocnik(ObrazacA1DTO o) {
+		Punomocnik punomocnik = new Punomocnik();
+		punomocnik.setIme(o.getZahtev().getPunomocnik().getIme());
+		punomocnik.setPrezime(o.getZahtev().getPunomocnik().getPrezime());
+		punomocnik.setAdresa(o.getZahtev().getPunomocnik().getAdresa());
+		return punomocnik;
+	}
+
+	private Prilozi getPrilozi(ObrazacA1DTO o) {
+		Prilozi prilozi = new Prilozi();
+		prilozi.setOpisAutorskogDela(o.getZahtev().getPrilozi().getOpisAutorskogDela());
+		prilozi.setPrimerAutorskogDela(o.getZahtev().getPrilozi().getPrimerAutorskogDela());
+		System.out.println(prilozi.getOpisAutorskogDela());
+		System.out.println(prilozi.getPrimerAutorskogDela());
+		return prilozi;
+	}
+
+	private PodaciOAutoruNepodnosilac getAutorPodaci(ObrazacA1DTO o) {
+		PodaciOAutoruNepodnosilac podaci = new PodaciOAutoruNepodnosilac();
+		if (!o.getZahtev().getPodnosilacAutor().getIme().equals("")) {
+			podaci.setAutor(o.getZahtev().getPodnosilacAutor());
+		} else if (!o.getZahtev().getAutorAnoniman().getIme().equals("")) {
+			podaci.setAutor(o.getZahtev().getAutorAnoniman());
+		} else if (!o.getZahtev().getAutorZiv().getIme().equals("")) {
+			podaci.setAutor(o.getZahtev().getAutorZiv());
 		} else {
-			System.out.println("Punomocnik");
-			System.out.println("\tIme: " + punomocnik.getIme());
-			System.out.println("\tPrezime: " + punomocnik.getPrezime());
-			printAdresa(punomocnik.getAdresa());
+			podaci.setAutor(o.getZahtev().getAutorPreminuo());
 		}
+		if (podaci.getAutor() instanceof TAutorZiv) {
+			TAutorZiv ziv = (TAutorZiv) podaci.getAutor();
+			System.out.println(ziv.getIme());
+			System.out.println(ziv.getAdresa().getUlica());
+		}
+		return podaci;
+	}
+
+	private NaslovDeloPrerade getDeloPrerade(ObrazacA1DTO o) {
+		NaslovDeloPrerade prerade = new NaslovDeloPrerade();
+		prerade.setAutor(o.getZahtev().getNaslovDeloPrerade().getAutor());
+		prerade.setNaslov(o.getZahtev().getNaslovDeloPrerade().getNaslov());
+		System.out.println(prerade.getAutor().getIme());
+		System.out.println(prerade.getNaslov());
+		return prerade;
+	}
+
+	private NaslovAutorskogDela getNaslovDela(ObrazacA1DTO o) {
+		NaslovAutorskogDela naslovDela = new NaslovAutorskogDela();
+		Naslov naslov = new Naslov();
+		naslov.setValue(o.getZahtev().getNaslovAutorskogDela().getNaslov().getValue());
+		naslovDela.setNaslov(naslov);
+		System.out.println(naslovDela.getNaslov().getValue());
+		AlternativniNaslov altNaslov = new AlternativniNaslov();
+		altNaslov.setValue(o.getZahtev().getNaslovAutorskogDela().getAlternativniNaslov().getValue());
+		naslovDela.setAlternativniNaslov(altNaslov);
+		System.out.println(naslovDela.getAlternativniNaslov().getValue());
+		return naslovDela;
+	}
+
+	private NacinKoriscenja getNacinKorscenja(ObrazacA1DTO o) {
+		NacinKoriscenja koriscenje = new NacinKoriscenja();
+		koriscenje.setValue(o.getZahtev().getNacinKoriscenja().getValue());
+		System.out.println(koriscenje.getValue());
+		return koriscenje;
+	}
+
+	private BrojPrijave getBrojPrijave() {
+		BrojPrijave br = new BrojPrijave();
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		String formattedDate = now.format(formatter);
+		StringBuilder sb = new StringBuilder();
+        sb.append("A-");
+        sb.append(formattedDate);
+        br.setValue(sb.toString());
+        System.out.println(br.getValue());
+		return br;
 	}
 	
-	private void printNaslov(ObrazacA1.Zahtev.NaslovAutorskogDela naslov) {
-		System.out.println("Naslov");
-		System.out.println("\tNaslov: " + naslov.getNaslov().getValue());
-		System.out.println("\tAlternativni naslov: " + naslov.getAlternativniNaslov().getValue());
+	private FormaZapisaAutorskogDela getFormaZapisa(ObrazacA1DTO o) {
+		FormaZapisaAutorskogDela forma = new FormaZapisaAutorskogDela();
+		forma.setValue(o.getZahtev().getFormaZapisaAutorskogDela().getValue());
+		System.out.println(forma.getValue());
+		return forma;
 	}
-	
-	private void printDeloPrerade(ObrazacA1.Zahtev.NaslovDeloPrerade deloPrerade) {
-		System.out.println("Delo prerade");
-		if (deloPrerade.getNaslov().equals("")) {
-			System.out.println("\tNije korisceno delo prerade");
+
+	private DatumPodnosenja getDatumPodnosenja(ObrazacA1DTO o) {
+		DatumPodnosenja datum = new DatumPodnosenja();
+		datum.setValue(o.getZahtev().getDatumPodnosenja().getValue());
+		System.out.println(datum.getValue());
+		return datum;
+	}
+
+	private AutorskoDeloStvorenoRadnimOdnosom getRadniOdnos(ObrazacA1DTO o) {
+		AutorskoDeloStvorenoRadnimOdnosom radni = new AutorskoDeloStvorenoRadnimOdnosom();
+		radni.setValue(o.getZahtev().getAutorskoDeloStvorenoRadnimOdnosom().getValue());
+		System.out.println(radni.getValue());
+		return radni;
+	}
+
+	private Podnosilac getPodnosilac(ObrazacA1DTO o) {
+		Podnosilac podnosilac = new Podnosilac();
+		if (o.getZahtev().getFizickoLice().getIme().equals("")) {
+			podnosilac.setLice(o.getZahtev().getPravnoLice());
 		} else {
-			System.out.println("\tNaslov: " + deloPrerade.getNaslov());
-			System.out.println("\tIme autora: " + deloPrerade.getAutor().getIme());
-			System.out.println("\tIme autora: " + deloPrerade.getAutor().getPrezime());
+			podnosilac.setLice(o.getZahtev().getFizickoLice());
 		}
+		return podnosilac;
 	}
 	
-	private void printVrstaDela(ObrazacA1.Zahtev.VrstaAutorskogDela vrsta) {
-		System.out.println("Vrsta autorskog dela - " + vrsta.getValue());
+	private PseudonimZnakAutora getPseudonim(ObrazacA1DTO o) {
+		PseudonimZnakAutora pseudonim = new PseudonimZnakAutora();
+		pseudonim.setValue(o.getZahtev().getPseudonimZnakAutora().getValue());
+		System.out.println(pseudonim.getValue());
+		return pseudonim;
+	}
+
+	public void save(ObrazacA1 obrazac) throws Exception {
+		OutputStream os = new ByteArrayOutputStream();
+        os = marshalling(obrazac, os);
+        a1Repository.save(obrazac.getZahtev().getBrojPrijave().getValue(), os);
+        rdfService.extractMetadata(obrazac);
 	}
 	
-	private void printFormaZapisa(ObrazacA1.Zahtev.FormaZapisaAutorskogDela forma) {
-		System.out.println("Forma zapisa autorskog dela - " + forma.getValue());
+	public OutputStream marshalling(ObrazacA1 obrazac, OutputStream outputStream) {
+        try{
+
+            JAXBContext context = JAXBContext.newInstance("main.java.com.xws.a1document.xml.model");
+            Marshaller marshaller = context.createMarshaller();            
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);            
+            marshaller.marshal(obrazac, outputStream);
+            return outputStream;
+        } catch (JAXBException e) {
+            throw new RuntimeException("JAXB marshalling exception");
+        }
+    }
+
+	public ObrazacA1 getByBrojPrijave(String id) throws Exception {
+		return a1Repository.getByBrojPrijave(id);
+	}
+
+	public List<ObrazacA1> getAllPending() throws Exception {
+		return a1Repository.getAllZahtevi("PENDING");		
 	}
 	
-	private void printAutorNepodnosilac(ObrazacA1.Zahtev.PodaciOAutoruNepodnosilac nepodnosilac) {
-		System.out.println("Podaci o autoru koji nije podnosilac zahteva");
-		if (nepodnosilac.getAutor() instanceof TAutor) {
-			System.out.println("\tAutor je anonimam");
-		} else if (nepodnosilac.getAutor() instanceof TAutorZiv) {			
-			TAutorZiv autor = (TAutorZiv) nepodnosilac.getAutor();
-			System.out.println("\tIme: " + autor.getIme());
-			System.out.println("\tPrezime " + autor.getPrezime());
-			printAdresa(autor.getAdresa());
-			System.out.println("\tDrzavljanstvo " );
-		} else if (nepodnosilac.getAutor() instanceof TAutorPreminuo) {
-			TAutorPreminuo autor = (TAutorPreminuo) nepodnosilac.getAutor();
-			System.out.println("\tIme: " + autor.getIme());
-			System.out.println("\tPrezime " + autor.getPrezime());
-			System.out.println("\tGodina smrti: " + autor.getGodinaSmrti());
-		}
+	public void approveZahtev(String documentId) throws Exception {
+		a1Repository.changeZahtevStatus(documentId, "APPROVED");
 	}
 	
-	private void printRadniOdnos(ObrazacA1.Zahtev.AutorskoDeloStvorenoRadnimOdnosom radniOdnos) {
-		System.out.println("Autorsko delo stvoreno radnim odnosom - " + radniOdnos.getValue());
+	public void denyZahtev(String documentId) throws Exception {
+		a1Repository.changeZahtevStatus(documentId, "DENIED");
 	}
 	
-	private void printNacinKoriscenja(ObrazacA1.Zahtev.NacinKoriscenja nacin) {
-		System.out.println("Nacin koriscenja - " + nacin.getValue());
-	}
 	
-	private void printBrojPrijave(ObrazacA1.Zahtev.BrojPrijave br) {
-		System.out.println("Broj prijave - " + br.getValue());
-	}
-	
-	private void printDatumPodnosenja(ObrazacA1.Zahtev.DatumPodnosenja datum) {
-		System.out.println("Datum podnosenja - " + datum.getValue());
-	}
 }

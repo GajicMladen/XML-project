@@ -14,38 +14,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
-/**
- * <p>Java class for t-pravno-lice complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="t-pravno-lice"&gt;
- *   &lt;complexContent&gt;
- *     &lt;extension base="{a-1}t-lice"&gt;
- *       &lt;sequence&gt;
- *         &lt;element name="poslovno-ime" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="sediste"&gt;
- *           &lt;complexType&gt;
- *             &lt;complexContent&gt;
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
- *                 &lt;sequence&gt;
- *                   &lt;element name="adresa" type="{a-1}t-adresa"/&gt;
- *                 &lt;/sequence&gt;
- *               &lt;/restriction&gt;
- *             &lt;/complexContent&gt;
- *           &lt;/complexType&gt;
- *         &lt;/element&gt;
- *       &lt;/sequence&gt;
- *     &lt;/extension&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
- * </pre>
- * 
- * 
- */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "t-pravno-lice", propOrder = {
+@XmlType(name = "t_pravno_lice", propOrder = {
     "poslovnoIme",
     "sediste"
 })
@@ -53,7 +23,7 @@ public class TPravnoLice
     extends TLice
 {
 
-    @XmlElement(name = "poslovno-ime", required = true)
+    @XmlElement(name = "poslovno_ime", required = true)
     protected String poslovnoIme;
     @XmlElement(required = true)
     protected TPravnoLice.Sediste sediste;
