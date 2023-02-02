@@ -40,8 +40,9 @@ public class UserController {
 	private TokenUtils tokenUtils;
 	
 	
-	@PostMapping(value = "login", produces="application/xml")
+	@PostMapping(value = "login", produces="application/xml", consumes="application/xml")
 	public ResponseEntity<?> login(@RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
+		System.out.println("AA");
 		Authentication auth;
 		try {
 			auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -59,7 +60,7 @@ public class UserController {
 		return ResponseEntity.ok(new UserTokenState(jwt, expiresIn, new UserDTO(user)));
 	}
 	
-	@PostMapping(value = "register", produces = "application/xml")
+	@PostMapping(value = "register", produces = "application/xml", consumes="application/xml")
 	public ResponseEntity<?> register(@RequestBody RegistrationDTO registrationDTO, UriComponentsBuilder ucBuilder){		
 		User existingUser = userService.getUserByUsername(registrationDTO.getUsername());
 		
