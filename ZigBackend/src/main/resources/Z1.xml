@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://www.tim777.rs/dokumentZ1 file:/C:/Users/PC/Desktop/fax/VII_semestar/XML/XML-project/KT2/Z1.xsd"
       xmlns:addr="http://www.tim777.rs/rdf/"
       xmlns:pred="http://www.tim777.rs/rdf/predicate/"
-      broj_zahteva="Ž-23333333/19"
+      broj_zahteva="Ž-7777777/19"
       datum_podnosenja="19.01.2023."
 >
     <podnosilac xsi:type='TFizicko_lice'>

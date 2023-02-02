@@ -58,11 +58,7 @@ public class ZigController {
     }
     @GetMapping(value = "getAllFusekiSPO")
     public ResponseEntity<String> getAllFuseki() throws IOException {
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-// write something to the outputStream
         String res = FusekiReader.readAllDataFromDatabaseJSON();
-//        InputStreamResource inputStreamResource = new InputStreamResource(new ByteArrayInputStream(outputStream.toByteArray()));
-//        ResponseEntity<InputStreamResource> response = new ResponseEntity<>(inputStreamResource, HttpStatus.OK);
         return new ResponseEntity<>(res,HttpStatus.OK);
     }
 
@@ -94,6 +90,23 @@ public class ZigController {
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + pdfFile.getName())
                     .contentType(MediaType.APPLICATION_PDF)
                     .contentLength(pdfFile.length())
+                    .body(resource);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+    @GetMapping("/downloadHTML")
+    public ResponseEntity<Resource> downloadHTML(){
+        try {
+            File htmlFIle = zigService.getTestHTMLFile();
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(htmlFIle));
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + htmlFIle.getName())
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .contentLength(htmlFIle.length())
                     .body(resource);
 
         } catch (FileNotFoundException e) {
