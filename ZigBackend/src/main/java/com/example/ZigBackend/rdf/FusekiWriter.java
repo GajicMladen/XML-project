@@ -40,12 +40,10 @@ public class FusekiWriter {
 	public static void saveRdfGraphToDatabase(Model metadataModel) throws IOException {
 		AuthenticationUtilitiesFuseki.ConnectionProperties conn = AuthenticationUtilitiesFuseki.loadProperties();
 
-		// zbog prirode metoda koje slede, potrebno je sadrzaj grafa (tj. modela) pretociti u instancu ByteArrayOutputStream-a
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		metadataModel.write(out, SparqlUtil.NTRIPLES);
 
 		System.out.println("\n[INFO] Populating graph \"" + conn.dataEndpoint + "/" + GRAPH_URI + "\" with extracted metadata.");
-		// ovde se prethodno popunjeni ByteArray objekat prosledjuje da bi se napravio quary string za komunikaciju sa bazom
 		String sparqlUpdate = SparqlUtil.insertData(conn.dataEndpoint + "/" + GRAPH_URI, new String(out.toByteArray()));
 		System.out.println(sparqlUpdate);
 

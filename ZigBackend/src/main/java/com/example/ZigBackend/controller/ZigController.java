@@ -58,11 +58,7 @@ public class ZigController {
     }
     @GetMapping(value = "getAllFusekiSPO")
     public ResponseEntity<String> getAllFuseki() throws IOException {
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-// write something to the outputStream
         String res = FusekiReader.readAllDataFromDatabaseJSON();
-//        InputStreamResource inputStreamResource = new InputStreamResource(new ByteArrayInputStream(outputStream.toByteArray()));
-//        ResponseEntity<InputStreamResource> response = new ResponseEntity<>(inputStreamResource, HttpStatus.OK);
         return new ResponseEntity<>(res,HttpStatus.OK);
     }
 

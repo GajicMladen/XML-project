@@ -43,6 +43,7 @@ public class ZigDB {
             XMLResource res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
             res.setContent(marshaledPatent);
             col.storeResource(res);
+            System.out.println("[INFO] Successful writing to ExistDB!");
         } catch (Exception e) {
             e.printStackTrace();
         }

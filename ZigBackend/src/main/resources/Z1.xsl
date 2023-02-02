@@ -48,8 +48,12 @@
                     </tr>
                     <tr style="height: 100px;">
                         <td colspan="23">
-                            <xsl:value-of select="//b:zahtev_za_priznanje_ziga//b:podnosilac//b:ime"/>
-                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:podnosilac/b:prezime"/>
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:podnosilac/b:ime"/>
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:podnosilac/b:prezime"/> ,
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:podnosilac/b:adresa/b:ulica"/>
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:podnosilac/b:adresa/b:broj"/>
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:podnosilac/b:adresa/b:postanski_broj"/> ,
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:podnosilac/b:adresa/b:drzava"/>
 
                         </td>
                     </tr>
@@ -73,9 +77,12 @@
                     </tr>
                     <tr style="height: 100px;">
                         <td colspan="23">
-                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:podnosilac/b:ime"/>
-                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:podnosilac/b:prezime"/>
-
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:punomocnik/b:ime"/>
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:punomocnik/b:prezime"/> ,
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:punomocnik/b:adresa/b:ulica"/>
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:punomocnik/b:adresa/b:broj"/>
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:punomocnik/b:adresa/b:postanski_broj"/> ,
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:punomocnik/b:adresa/b:drzava"/>
                         </td>
                     </tr>
                     <tr>
@@ -97,9 +104,12 @@
                     </tr>
                     <tr style="height: 100px;">
                         <td colspan="23">
-                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:podnosilac/b:ime"/>
-                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:podnosilac/b:prezime"/>
-
+                           <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:zajednicki_posrednik/b:ime"/>
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:zajednicki_posrednik/b:prezime"/> ,
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:zajednicki_posrednik/b:adresa/b:ulica"/>
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:zajednicki_posrednik/b:adresa/b:broj"/>
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:zajednicki_posrednik/b:adresa/b:postanski_broj"/> ,
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:zajednicki_posrednik/b:adresa/b:drzava"/>
                         </td>
                     </tr>
                     <tr>
@@ -131,6 +141,9 @@
                         </td>
                         <td colspan="3">
 
+                            <xsl:if test="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:tip_ziga='individualni_zig'">
+                                X
+                            </xsl:if>
                         </td>
                     </tr>
                     <tr>
@@ -139,7 +152,9 @@
 
                         </td>
                         <td colspan="12" rowspan="11">
-
+                            <xsl:if test="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:tip_ziga='kolektivni_zig'">
+                                X
+                            </xsl:if>
                         </td>
                     </tr>
                     <tr>
@@ -147,6 +162,9 @@
                             zig generacije
                         </td>
                         <td colspan="3">
+                            <xsl:if test="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:tip_ziga='zig_garancije'">
+                                X
+                            </xsl:if>
 
                         </td>
                     </tr>
@@ -158,14 +176,20 @@
                             verbalni znak
                         </td>
                         <td colspan="3">
+                                                            <xsl:if test="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:znak/b:vrsta_znaka='verbalni'">
+                                                                X
+                                                            </xsl:if>
 
                         </td>
                     </tr>
                     <tr>
                         <td colspan="7">
-                            graficki znak
+                        grafički znak; boju, kombinaciju boja
                         </td>
                         <td colspan="3">
+                                                            <xsl:if test="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:znak/b:vrsta_znaka='graficki'">
+                                                                X
+                                                            </xsl:if>
 
                         </td>
                     </tr>
@@ -174,6 +198,9 @@
                             kombinovani znak
                         </td>
                         <td colspan="3">
+                                                            <xsl:if test="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:znak/b:vrsta_znaka='kombinovani'">
+                                                                X
+                                                            </xsl:if>
 
                         </td>
                     </tr>
@@ -182,6 +209,9 @@
                             trodimenzionalni znak
                         </td>
                         <td colspan="3">
+                                                                <xsl:if test="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:znak/b:vrsta_znaka='trodimenzionalni'">
+                                                                    X
+                                                                </xsl:if>
 
                         </td>
                     </tr>
@@ -190,6 +220,9 @@
                             druga vrska znaka
                         </td>
                         <td colspan="3">
+                                                            <xsl:if test="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:znak/b:vrsta_znaka='drugo'">
+                                                                X
+                                                            </xsl:if>
 
                         </td>
                     </tr>
@@ -197,21 +230,24 @@
                         <td colspan="11">
                             5. Naznačenje boje, odnosno boja iz kojih se znak
                             sastoji:
+                                                    <xsl:for-each select="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:znak/b:boje_znaka">
+                                                        <xsl:value-of select="./b:boja"/>,
+                                                    </xsl:for-each>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="11">
-                            6. Transliteracija znaka*:
+                            6. Transliteracija znaka*: <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:znak/b:transliteracija"/>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="11">
-                            7. Prevod znaka*:
+                            7. Prevod znaka*: <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:znak/b:prevod"/>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="11">
-                            8. Opis znaka:
+                            8. Opis znaka: <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:opis_ziga/b:znak/b:opis_znaka"/>
                         </td>
                     </tr>
                     <tr>
@@ -228,7 +264,9 @@
                     </tr>
                     <tr>
                         <td colspan="23">
-                            10. Zatraženo pravo prvenstva i osnov:
+                            10. Zatraženo pravo prvenstva i osnov:<br />
+                            Pravo: <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:zatrazeno_pravo_prvenstva/b:pravo"/><br />
+                            Osnov: <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:zatrazeno_pravo_prvenstva/b:osnov"/>
                         </td>
                     </tr>
                 </table>
@@ -251,7 +289,7 @@
                             a) osnovna taksa
                         </td>
                         <td>
-
+ <xsl:value-of select="b:zahtev_za_priznanje_ziga/b:placanje/b:onsovna_taksa"/>
                         </td>
                     </tr>
                     <tr>
@@ -260,7 +298,7 @@
                             v) za grafičko rešenje
                         </td>
                         <td>
-
+<xsl:value-of select="b:zahtev_za_priznanje_ziga/b:placanje/b:graficko_resenje"/>
                         </td>
                     </tr>
                     <tr>
@@ -268,7 +306,7 @@
                             UKUPNO
                         </td>
                         <td>
-
+<xsl:value-of select="b:zahtev_za_priznanje_ziga/b:placanje/b:ukupno"/>
                         </td>
                     </tr>
                 </table>
@@ -284,10 +322,10 @@
                             Prilozi uz zahtev:
                         </td>
                         <td rowspan="9">
-                            Broj prijave žiga:
-                            Ž-_________/___
-                            Datum podnošenja:
-                            ________________________
+                            Broj prijave žiga:<br />
+                             <xsl:value-of select="b:zahtev_za_priznanje_ziga/@broj_zahteva" />
+                            <br />Datum podnošenja:
+                            <xsl:value-of select="b:zahtev_za_priznanje_ziga/@datum_podnosenja" />
 
                         </td>
                     </tr>

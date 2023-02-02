@@ -38,7 +38,6 @@ public class ZigService {
 
     public ZahtevZaPriznanjeZiga saveTestXMLinDB() throws FileNotFoundException, JAXBException {
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getTestZahtevZaPrizanjeZiga();
-//        zahtevZaPriznanjeZiga.setBrojZahteva("Z1_MG");
         ZigDB.save(zahtevZaPriznanjeZiga);
         FusekiDB.save(zahtevZaPriznanjeZiga);
         return zahtevZaPriznanjeZiga;

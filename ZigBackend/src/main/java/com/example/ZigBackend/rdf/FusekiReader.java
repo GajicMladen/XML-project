@@ -37,7 +37,7 @@ public class FusekiReader {
         QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
         ResultSet results = query.execSelect();
         String res = ResultSetFormatter.asText(results);
-        ResultSetFormatter.out(System.out, results);
+//        ResultSetFormatter.out(System.out, results);
         System.out.println(res);
         query.close() ;
         return res;

@@ -60,31 +60,6 @@ public class HTMLTransformer {
         /* Inicijalizacija Transformer fabrike */
         transformerFactory = TransformerFactory.newInstance();
     }
-    /**
-     * Creates a PDF using iText Java API
-     * @param filePath
-     * @throws IOException
-     * @throws DocumentException
-     */
-    public void generatePDF(String filePath) throws IOException, DocumentException {
-
-//        // Step 1
-//        Document document = new Document();
-//
-//        // Step 2
-//        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
-//
-//        // Step 3
-//        document.open();
-//
-//        // Step 4
-//        XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(HTML_FILE));
-//
-//        // Step 5
-//        document.close();
-
-    }
-
     public org.w3c.dom.Document buildDocument(String filePath) {
 
         org.w3c.dom.Document document = null;
