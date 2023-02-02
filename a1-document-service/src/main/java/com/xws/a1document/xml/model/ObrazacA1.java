@@ -17,7 +17,6 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "zavod",
@@ -95,8 +94,19 @@ public class ObrazacA1 {
         @XmlAttribute(name = "naslov")
         @XmlSchemaType(name = "anySimpleType")
         protected String naslov;
+        @XmlAttribute(name = "status")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String status;
 
-        public ObrazacA1 .Zahtev.Podnosilac getPodnosilac() {
+        public String getStatus() {
+			return status;
+		}
+
+		public void setStatus(String status) {
+			this.status = status;
+		}
+
+		public ObrazacA1 .Zahtev.Podnosilac getPodnosilac() {
             return podnosilac;
         }
 

@@ -71,6 +71,7 @@ public class A1Service {
 		zahtev.setPrilozi(getPrilozi(o));
 		zahtev.setPunomocnik(getPunomocnik(o));
 		zahtev.setVrstaAutorskogDela(getVrsta(o));
+		zahtev.setStatus("PENDING");
 		obrazac.setZahtev(zahtev);
 		return obrazac;
 	}
@@ -222,8 +223,16 @@ public class A1Service {
 		return a1Repository.getByBrojPrijave(id);
 	}
 
-	public List<ObrazacA1> getAllZahtevi() throws Exception {
-		return a1Repository.getAllZahtevi();		
+	public List<ObrazacA1> getAllPending() throws Exception {
+		return a1Repository.getAllZahtevi("PENDING");		
+	}
+	
+	public void approveZahtev(String documentId) throws Exception {
+		a1Repository.changeZahtevStatus(documentId, "APPROVED");
+	}
+	
+	public void denyZahtev(String documentId) throws Exception {
+		a1Repository.changeZahtevStatus(documentId, "DENIED");
 	}
 	
 	

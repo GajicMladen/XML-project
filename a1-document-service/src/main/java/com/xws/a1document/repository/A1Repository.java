@@ -12,6 +12,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.OutputKeys;
 
 import org.exist.xmldb.EXistResource;
+import org.exist.xupdate.XUpdateProcessor;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
@@ -22,6 +23,7 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XQueryService;
+import org.xmldb.api.modules.XUpdateQueryService;
 
 import main.java.com.xws.a1document.util.ExistAuthUtilities;
 import main.java.com.xws.a1document.util.ExistAuthUtilities.ConnectionProperties;
@@ -131,7 +133,7 @@ public class A1Repository {
 		return obrazac;
 	}
 	
-	public List<ObrazacA1> getAllZahtevi() throws Exception {
+	public List<ObrazacA1> getAllZahtevi(String status) throws Exception {
 		
 		ConnectionProperties conn = ExistAuthUtilities.loadProperties();
 		Class<?> cl = Class.forName(conn.driver);
@@ -144,7 +146,8 @@ public class A1Repository {
         XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
         xqueryService.setProperty("indent", "yes");
 		
-        String xPathExp = "//obrazac_a_1";
+        //String xPathExp = "//obrazac_a_1";
+        String xPathExp = "//zahtev[@status='" + status + "']/ancestor::*";          
         
         ResourceSet result = xqueryService.query(xPathExp);
         ResourceIterator i = result.getIterator();
@@ -167,6 +170,42 @@ public class A1Repository {
             System.out.println(res.getContent());
         }
 		return obrasci;
+	}
+	
+	public void changeZahtevStatus(String id, String status) throws Exception {
+		String documentId = id + ".xml";
+        String collectionId = "/db/service/a/requests";
+        
+        ConnectionProperties conn = ExistAuthUtilities.loadProperties();
+        Class<?> cl = Class.forName(conn.driver);
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+        DatabaseManager.registerDatabase(database);
+        
+        Collection col = null;
+        
+        try { 
+        	//String contextXPath = "//zahtev[@status='PENDING']";
+        	String contextXPath = "//zahtev/@status";
+        	
+        	String patch = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
+        				   + "\" >" + "<xu:update select=\"%1$s\">%2$s</xu:update>"
+        				   + "</xu:modifications>";
+        	
+        	col = DatabaseManager.getCollection(conn.uri + collectionId, conn.user, conn.password);
+            col.setProperty("indent", "yes");
+            XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
+            xupdateService.setProperty("indent", "yes");
+            
+            String update = String.format(patch, contextXPath, status);
+            System.out.println("[INFO] Updating " + contextXPath + " node.");
+            long mods = xupdateService.updateResource(documentId, update);
+            System.out.println("[INFO] " + mods + " modifications processed.");
+        	
+        } catch (Exception e) {
+       
+		}
+        
 	}
 	
 	private static Collection getOrCreateCollection(ConnectionProperties conn, String collectionUri) throws XMLDBException {

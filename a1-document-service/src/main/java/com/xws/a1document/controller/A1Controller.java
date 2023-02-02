@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -12,7 +13,9 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import main.java.com.xws.a1document.dto.ObrazacA1DTO;
+import main.java.com.xws.a1document.dto.ObrazacA1List;
 import main.java.com.xws.a1document.service.A1Service;
 import main.java.com.xws.a1document.service.ExistService;
 import main.java.com.xws.a1document.service.PdfService;
@@ -130,7 +134,7 @@ public class A1Controller {
 	}
 	
 	@PostMapping(value="save", consumes = "application/xml")
-	public ResponseEntity<?> save(@RequestBody ObrazacA1DTO obrazac) throws Exception {		
+	public ResponseEntity<?> save(@RequestBody ObrazacA1DTO obrazac) throws Exception {
 		a1Service.save(a1Service.getObrazacA1(obrazac));
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -141,21 +145,37 @@ public class A1Controller {
 		return new ResponseEntity<>(obrazac, HttpStatus.OK);
 	}
 	
-	@GetMapping(value="getAll", produces = "application/xml")
-	public ResponseEntity<?> getAllZahtevi() throws Exception {
-		List<ObrazacA1> obrasci = a1Service.getAllZahtevi();
+	@GetMapping(value="getAllPending", produces = "application/xml")
+	public ResponseEntity<?> getAllPending() throws Exception {
+		List<ObrazacA1> obrasci = a1Service.getAllPending();		
 		System.out.println("SIZE: " + obrasci.size());
+		//ObrazacA1List obrasciList = new ObrazacA1List();
+		//obrasciList.setZahtevi(obrasci);
 		return new ResponseEntity<>(obrasci, HttpStatus.OK);
+		//return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_XML_VALUE).body(obrasciList);
 	}
 	
-	@GetMapping(value="search")
+	@GetMapping(value="search", produces = "application/xml")
 	public ResponseEntity<?> search(@RequestParam String query) {
+		List<ObrazacA1> obrasci = new ArrayList<ObrazacA1>();
 		try {
-			existService.search(query, ExistAuthUtilities.loadProperties());
+			obrasci = existService.search(query, ExistAuthUtilities.loadProperties());
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
-		return new ResponseEntity<>("Search done!", HttpStatus.OK);
+		return new ResponseEntity<>(obrasci, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="approved")
+	public ResponseEntity<?> approveZahtev(@RequestParam String id) throws Exception {
+		a1Service.approveZahtev(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@GetMapping(value="denied")
+	public ResponseEntity<?> denyZahtev(@RequestParam String id) throws Exception {
+		a1Service.denyZahtev(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	

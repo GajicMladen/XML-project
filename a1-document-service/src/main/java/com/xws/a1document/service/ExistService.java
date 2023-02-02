@@ -206,7 +206,7 @@ public class ExistService {
         XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
         xqueryService.setProperty("indent", "yes");
 		
-        String xPathExp = "/*[contains(., '" + query + "')]";
+        String xPathExp = "/*[contains(., '" + query + "')]";     
         
         ResourceSet result = xqueryService.query(xPathExp);
         ResourceIterator i = result.getIterator();
