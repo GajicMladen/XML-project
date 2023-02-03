@@ -43,6 +43,12 @@ public class ZigService {
         return zahtevZaPriznanjeZiga;
     }
 
+    public  ZahtevZaPriznanjeZiga saveXMLinDB(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga){
+        ZigDB.save(zahtevZaPriznanjeZiga);
+        FusekiDB.save(zahtevZaPriznanjeZiga);
+        return zahtevZaPriznanjeZiga;
+    }
+
     public File getTestPDFFile(){
         try {
             PDFTransformer pdfTransformer = new PDFTransformer();

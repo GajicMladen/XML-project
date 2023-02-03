@@ -75,6 +75,8 @@ public class ZahtevZaPriznanjeZiga {
     protected Prilozi prilozi;
     @XmlAttribute(name = "broj_zahteva")
     protected String brojZahteva;
+    @XmlAttribute(name = "datum_zahteva")
+    protected String datumZahteva;
 
     /**
      * Gets the value of the podnosilac property.
@@ -281,6 +283,18 @@ public class ZahtevZaPriznanjeZiga {
     }
 
     /**
+     * Gets the value of the datumZahteva property.
+     *
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
+     */
+    public String getDatumZahteva() {
+        return datumZahteva;
+    }
+
+    /**
      * Sets the value of the brojZahteva property.
      * 
      * @param value
@@ -290,6 +304,18 @@ public class ZahtevZaPriznanjeZiga {
      */
     public void setBrojZahteva(String value) {
         this.brojZahteva = value;
+    }
+
+    /**
+     * Sets the value of the datumZahteva property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
+     */
+    public void setDatumZahtevaZahteva(String value) {
+        this.datumZahteva = value;
     }
 
     @Override
@@ -303,6 +329,7 @@ public class ZahtevZaPriznanjeZiga {
                 ", zatrazenoPravoPrvenstva=" + zatrazenoPravoPrvenstva +
                 ", placanje=" + placanje +
                 ", prilozi=" + prilozi +
+                ", datumZahteva=" + datumZahteva +
                 ", brojZahteva='" + brojZahteva + '\'' +
                 '}';
     }

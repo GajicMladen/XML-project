@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.xml.bind.JAXBException;
@@ -23,6 +25,7 @@ import org.springframework.core.io.InputStreamResource;
 
 
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "api/zig/")
 public class ZigController {
 
@@ -56,6 +59,14 @@ public class ZigController {
         }
         return new ResponseEntity<>(zahtevZaPriznanjeZiga.toString(),HttpStatus.OK);
     }
+
+    @GetMapping(value = "saveXML",consumes = "application/xml")
+    public ResponseEntity<String> saveRealXML(@RequestBody ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga){
+        zahtevZaPriznanjeZiga =  zigService.saveXMLinDB(zahtevZaPriznanjeZiga);
+        return new ResponseEntity<>(zahtevZaPriznanjeZiga.toString(),HttpStatus.OK);
+    }
+
+
     @GetMapping(value = "getAllFusekiSPO")
     public ResponseEntity<String> getAllFuseki() throws IOException {
         String res = FusekiReader.readAllDataFromDatabaseJSON();
