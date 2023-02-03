@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.JAXBException;
 import java.io.*;
@@ -60,7 +57,7 @@ public class ZigController {
         return new ResponseEntity<>(zahtevZaPriznanjeZiga.toString(),HttpStatus.OK);
     }
 
-    @GetMapping(value = "saveXML",consumes = "application/xml")
+    @PostMapping(value = "saveXML",consumes = "application/xml")
     public ResponseEntity<String> saveRealXML(@RequestBody ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga){
         zahtevZaPriznanjeZiga =  zigService.saveXMLinDB(zahtevZaPriznanjeZiga);
         return new ResponseEntity<>(zahtevZaPriznanjeZiga.toString(),HttpStatus.OK);

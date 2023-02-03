@@ -27,7 +27,7 @@ public class ZigMetadataExtractor {
         //
         addRDFTripletToModel(model, resource, "podnosilac_email", zahtev.getPodnosilac().getKontakt().getEmail());
         addRDFTripletToModel(model, resource, "pronalazac_email", zahtev.getPunomocnik().getKontakt().getEmail());
-        if(zahtev.getZajednickiPosrednik() != null)
+        if(zahtev.getZajednickiPosrednik().getKontakt() != null)
             addRDFTripletToModel(model, resource, "punomocnik_email", zahtev.getZajednickiPosrednik().getKontakt().getEmail());
         addRDFTripletToModel(model, resource, "vrsta_ziga", zahtev.getOpisZiga().getTipZiga().value());
         addRDFTripletToModel(model, resource, "broj_zahteva", zahtev.getBrojZahteva());
