@@ -42,6 +42,7 @@ public class A1Repository {
         Class<?> cl = Class.forName(conn.driver);
         Database database = (Database) cl.newInstance();
         database.setProperty("create-database", "true");
+        DatabaseManager.registerDatabase(database);
         
         Collection col = null;
         XMLResource res = null;

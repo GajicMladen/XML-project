@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import main.java.com.xws.a1document.dto.ObrazacA1DTO;
-import main.java.com.xws.a1document.dto.ObrazacA1List;
 import main.java.com.xws.a1document.service.A1Service;
 import main.java.com.xws.a1document.service.ExistService;
 import main.java.com.xws.a1document.service.PdfService;
