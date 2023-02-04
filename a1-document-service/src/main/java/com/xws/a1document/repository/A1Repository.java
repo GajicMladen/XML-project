@@ -134,6 +134,42 @@ public class A1Repository {
 		return obrazac;
 	}
 	
+	public String getByBrojPrijaveAsString(String document) throws Exception{
+		String documentId = document + ".xml";
+        String collectionId = "/db/service/a/requests";
+        ConnectionProperties conn = ExistAuthUtilities.loadProperties();
+        Class<?> cl = Class.forName(conn.driver);
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+        DatabaseManager.registerDatabase(database);
+        
+        Collection col = null;
+        XMLResource res = null;
+        try {
+        	col = DatabaseManager.getCollection(conn.uri + collectionId);
+            col.setProperty(OutputKeys.INDENT, "yes");
+            res = (XMLResource)col.getResource(documentId);          
+        } finally {
+            
+            if(res != null) {
+                try { 
+                	((EXistResource)res).freeResources(); 
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+            
+            if(col != null) {
+                try { 
+                	col.close(); 
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+        }
+        return (String) res.getContent();
+	}
+	
 	public List<ObrazacA1> getAllZahtevi(String status) throws Exception {
 		
 		ConnectionProperties conn = ExistAuthUtilities.loadProperties();
