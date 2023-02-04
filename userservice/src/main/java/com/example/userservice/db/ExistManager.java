@@ -21,7 +21,7 @@ import org.xmldb.api.modules.XUpdateQueryService;
 @Component
 public class ExistManager {
 	
-	private final static String TARGET_NAMESPACE = "http://http://www.tim777.com";
+	private final static String TARGET_NAMESPACE = "";
 	
 	public static final String UPDATE = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
 			+ "\" xmlns=\"" + TARGET_NAMESPACE + "\">" + "<xu:update select=\"%1$s\">%2$s</xu:update>"
