@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import main.java.com.xws.a1document.dto.ObrazacA1DTO;
+import main.java.com.xws.a1document.dto.ResenjeDTO;
 import main.java.com.xws.a1document.dto.SedisteDTO;
 import main.java.com.xws.a1document.dto.TAdresaDTO;
 import main.java.com.xws.a1document.dto.TAutorPreminuoDTO;
@@ -78,7 +79,7 @@ public class A1Service {
 		zahtev.setFormaZapisaAutorskogDela(getFormaZapisa(o));
 		zahtev.setBrojPrijave(getBrojPrijave());
 		zahtev.setNacinKoriscenja(getNacinKorscenja(o));
-		zahtev.setNaslov("Zahtev za unosenje u evidenciju i deponovanje autorskih dela");
+		zahtev.setNaslov("Zahtev za unosenje u evidenciju i deponovanje autorskih dela");		
 		zahtev.setNaslovAutorskogDela(getNaslovDela(o));
 		zahtev.setNaslovDeloPrerade(getDeloPrerade(o));
 		zahtev.setPodaciOAutoruNepodnosilac(getAutorPodaci(o));
@@ -86,6 +87,10 @@ public class A1Service {
 		zahtev.setPunomocnik(getPunomocnik(o));
 		zahtev.setVrstaAutorskogDela(getVrsta(o));
 		zahtev.setStatus("PENDING");
+		zahtev.setIme("");
+		zahtev.setPrezime("");
+		zahtev.setDatumObrade("");
+		zahtev.setObrazlozenje("");
 		obrazac.setZahtev(zahtev);
 		return obrazac;
 		
@@ -299,12 +304,16 @@ public class A1Service {
 		return a1Repository.getAllZahtevi("PENDING");		
 	}
 	
-	public void approveZahtev(String documentId) throws Exception {
-		a1Repository.changeZahtevStatus(documentId, "APPROVED");
+	public List<ObrazacA1> getAllApproved() throws Exception {
+		return a1Repository.getAllZahtevi("APPROVED");
 	}
 	
-	public void denyZahtev(String documentId) throws Exception {
-		a1Repository.changeZahtevStatus(documentId, "DENIED");
+	public void approveZahtev(ResenjeDTO resenjeDTO) throws Exception {
+		a1Repository.solveRequest(resenjeDTO);
+	}
+	
+	public void denyZahtev(ResenjeDTO resenjeDTO) throws Exception {
+		a1Repository.solveRequest(resenjeDTO);
 	}
 	
 	
