@@ -316,5 +316,15 @@ public class A1Service {
 		a1Repository.solveRequest(resenjeDTO);
 	}
 	
+	public String getMetadataById(String id, String type) throws Exception {
+		if (type.equals("JSON")) {
+			String sparqlQuery = "VALUES ?subject { <" + "http://www.tim777.com/a/" + id + "> } ?subject ?predicate ?object .";
+            return rdfService.getJsonMetadata(sparqlQuery);
+		} else {
+			String sparqlQuery = "<http://www.tim777.com/a/" + id + "> ?predicate ?object .";
+            return rdfService.getRdfMetadata(sparqlQuery);
+		}
+	}
+	
 	
 }

@@ -183,5 +183,16 @@ public class A1Controller {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "getJson")
+    public ResponseEntity<?> getJsonMetadataById(@RequestParam(name = "id") String id) throws Exception {
+		String result = a1Service.getMetadataById(id, "JSON");              
+        return new ResponseEntity<>(result, HttpStatus.OK);        
+    }
+
+    @GetMapping(value = "getRdf", produces = "application/xml")
+    public ResponseEntity<String> getRdfMetadataById(@RequestParam(name = "id") String id) throws Exception {
+        String result = a1Service.getMetadataById(id, "RDF");        
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 	
 }
