@@ -143,29 +143,7 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<schemaDirectory>${project.basedir}/data</schemaDirectory>
-					<schemaIncludes>
-						<include>*.xsd</include>
-					</schemaIncludes>
-					<outputDirectory>${basedir}/src/main/java/com/xws/a1document/xml/model</outputDirectory>
-					<clearOutputDir>true</clearOutputDir>
-				</configuration>
-			</plugin>			
+
 		</plugins>
 	</build>
 </project>

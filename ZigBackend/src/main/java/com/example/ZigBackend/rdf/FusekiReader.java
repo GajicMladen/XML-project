@@ -23,7 +23,6 @@ public class FusekiReader {
         // Create a QueryExecution that will access a SPARQL service over HTTP
         QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
         ResultSet results = query.execSelect();
-        ResultSetFormatter.out(System.out, results);
         ResultSetFormatter.out(os, results);
         query.close() ;
     }
