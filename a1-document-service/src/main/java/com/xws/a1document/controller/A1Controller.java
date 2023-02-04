@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import main.java.com.xws.a1document.dto.ObrazacA1DTO;
-import main.java.com.xws.a1document.dto.ObrazacA1List;
+import main.java.com.xws.a1document.dto.ResenjeDTO;
 import main.java.com.xws.a1document.service.A1Service;
 import main.java.com.xws.a1document.service.ExistService;
 import main.java.com.xws.a1document.service.PdfService;
@@ -133,6 +133,9 @@ public class A1Controller {
 		return new ResponseEntity<>("Metadata extracted!", HttpStatus.OK);
 	}
 	
+	
+	
+	
 	@PostMapping(value="save", consumes = "application/xml")
 	public ResponseEntity<?> save(@RequestBody ObrazacA1DTO obrazac) throws Exception {
 		a1Service.save(a1Service.getObrazacA1(obrazac));
@@ -147,12 +150,14 @@ public class A1Controller {
 	
 	@GetMapping(value="getAllPending", produces = "application/xml")
 	public ResponseEntity<?> getAllPending() throws Exception {
-		List<ObrazacA1> obrasci = a1Service.getAllPending();		
-		System.out.println("SIZE: " + obrasci.size());
-		//ObrazacA1List obrasciList = new ObrazacA1List();
-		//obrasciList.setZahtevi(obrasci);
+		List<ObrazacA1> obrasci = a1Service.getAllPending();				
 		return new ResponseEntity<>(obrasci, HttpStatus.OK);
-		//return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_XML_VALUE).body(obrasciList);
+	}
+	
+	@GetMapping(value="getAllApproved", produces = "application/xml")
+	public ResponseEntity<?> getAllApproved() throws Exception {
+		List<ObrazacA1> obrasci = a1Service.getAllApproved();
+		return new ResponseEntity<>(obrasci, HttpStatus.OK);
 	}
 	
 	@GetMapping(value="search", produces = "application/xml")
@@ -166,17 +171,28 @@ public class A1Controller {
 		return new ResponseEntity<>(obrasci, HttpStatus.OK);
 	}
 	
-	@GetMapping(value="approved")
-	public ResponseEntity<?> approveZahtev(@RequestParam String id) throws Exception {
-		a1Service.approveZahtev(id);
+	@PostMapping(value="approved", consumes = "application/xml")
+	public ResponseEntity<?> approveZahtev(@RequestBody ResenjeDTO resenjeDTO) throws Exception {
+		a1Service.approveZahtev(resenjeDTO);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@GetMapping(value="denied")
-	public ResponseEntity<?> denyZahtev(@RequestParam String id) throws Exception {
-		a1Service.denyZahtev(id);
+	@PostMapping(value="denied", consumes = "application/xml")
+	public ResponseEntity<?> denyZahtev(@RequestBody ResenjeDTO resenjeDTO) throws Exception {
+		a1Service.denyZahtev(resenjeDTO);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "getJson")
+    public ResponseEntity<?> getJsonMetadataById(@RequestParam(name = "id") String id) throws Exception {
+		String result = a1Service.getMetadataById(id, "JSON");              
+        return new ResponseEntity<>(result, HttpStatus.OK);        
+    }
+
+    @GetMapping(value = "getRdf", produces = "application/xml")
+    public ResponseEntity<String> getRdfMetadataById(@RequestParam(name = "id") String id) throws Exception {
+        String result = a1Service.getMetadataById(id, "RDF");        
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 	
 }
