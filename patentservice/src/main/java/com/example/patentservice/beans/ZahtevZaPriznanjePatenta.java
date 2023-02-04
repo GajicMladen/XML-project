@@ -207,7 +207,7 @@ public class ZahtevZaPriznanjePatenta {
     protected ZahtevZaPriznanjePatenta.Dopuna dopuna;
     @XmlElement(name = "priznanje_prava_prvenstva_iz_ranijih_prijava", required = true)
     protected ZahtevZaPriznanjePatenta.PriznanjePravaPrvenstvaIzRanijihPrijava priznanjePravaPrvenstvaIzRanijihPrijava;
-
+    
     /**
      * Gets the value of the podaciZavod property.
      * 
@@ -667,6 +667,10 @@ public class ZahtevZaPriznanjePatenta {
          * 
          * 
          */
+        public NazivPronalaska() {
+        	this.naziv = new ArrayList<TNaziv>();
+        }
+        
         public List<TNaziv> getNaziv() {
             if (naziv == null) {
                 naziv = new ArrayList<TNaziv>();
@@ -899,7 +903,10 @@ public class ZahtevZaPriznanjePatenta {
     @XmlType(name = "", propOrder = {
         "brojPrijave",
         "datumPrijema",
-        "datumPodnosenja"
+        "datumPodnosenja",
+        "statusZahteva",
+        "sluzbenik",
+        "obrazlozenje"
     })
     public static class PodaciZavod {
 
@@ -911,8 +918,38 @@ public class ZahtevZaPriznanjePatenta {
         @XmlElement(name = "datum_podnosenja", required = true)
         @XmlSchemaType(name = "date")
         protected XMLGregorianCalendar datumPodnosenja;
+        @XmlElement(name = "status_zahteva")
+        protected String statusZahteva;
+        @XmlElement(name = "sluzbenik")
+        protected String sluzbenik;
+        @XmlElement(name = "obrazlozenje")
+        protected String obrazlozenje;
+        
+        public String getStatusZahteva() {
+			return statusZahteva;
+		}
 
-        /**
+		public void setStatusZahteva(String statusZahteva) {
+			this.statusZahteva = statusZahteva;
+		}
+
+		public String getSluzbenik() {
+			return sluzbenik;
+		}
+
+		public void setSluzbenik(String sluzbenik) {
+			this.sluzbenik = sluzbenik;
+		}
+
+		public String getObrazlozenje() {
+			return obrazlozenje;
+		}
+
+		public void setObrazlozenje(String obrazlozenje) {
+			this.obrazlozenje = obrazlozenje;
+		}
+
+		/**
          * Gets the value of the brojPrijave property.
          * 
          * @return
@@ -1227,6 +1264,10 @@ public class ZahtevZaPriznanjePatenta {
          * 
          * 
          */
+        public PriznanjePravaPrvenstvaIzRanijihPrijava() {
+        	this.detaljiRanijePrijave = new ArrayList<TDetaljiRanijePrijave>();
+        }
+        
         public List<TDetaljiRanijePrijave> getDetaljiRanijePrijave() {
             if (detaljiRanijePrijave == null) {
                 detaljiRanijePrijave = new ArrayList<TDetaljiRanijePrijave>();

@@ -12,6 +12,9 @@
                             <xs:element name="broj_prijave" type="TBroj_prijave"/>
                             <xs:element name="datum_prijema" type="xs:date"/>
                             <xs:element name="datum_podnosenja" type="xs:date"/>
+                            <xs:element name="status_zahteva" type="TStatus_prijave"/>
+                            <xs:element name="sluzbenik" type="xs:string"/>
+                            <xs:element name="obrazlozenje" type="xs:string"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -221,4 +224,11 @@
             />
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="TStatus_prijave">
+		<xs:restriction base="xs:string">
+		  <xs:enumeration value="pending"/>
+		  <xs:enumeration value="accepted"/>
+		  <xs:enumeration value="declined"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>
