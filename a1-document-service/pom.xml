@@ -122,6 +122,14 @@
             <version>1.4.2.Final</version>
         </dependency>
         
+        <!-- https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE -->
+		<dependency>
+		    <groupId>net.sf.saxon</groupId>
+		    <artifactId>Saxon-HE</artifactId>
+		    <version>12.0</version>
+		</dependency>
+		        
+        
 	</dependencies>
 
 	<build>

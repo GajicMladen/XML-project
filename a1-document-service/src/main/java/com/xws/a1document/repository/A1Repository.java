@@ -1,7 +1,6 @@
 package main.java.com.xws.a1document.repository;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +24,7 @@ import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XQueryService;
 import org.xmldb.api.modules.XUpdateQueryService;
 
+import main.java.com.xws.a1document.dto.ResenjeDTO;
 import main.java.com.xws.a1document.util.ExistAuthUtilities;
 import main.java.com.xws.a1document.util.ExistAuthUtilities.ConnectionProperties;
 import main.java.com.xws.a1document.xml.model.ObrazacA1;
@@ -173,8 +173,8 @@ public class A1Repository {
 		return obrasci;
 	}
 	
-	public void changeZahtevStatus(String id, String status) throws Exception {
-		String documentId = id + ".xml";
+	public void solveRequest(ResenjeDTO resenjeDTO) throws Exception {
+		String documentId = resenjeDTO.getId() + ".xml";
         String collectionId = "/db/service/a/requests";
         
         ConnectionProperties conn = ExistAuthUtilities.loadProperties();
@@ -186,8 +186,11 @@ public class A1Repository {
         Collection col = null;
         
         try { 
-        	//String contextXPath = "//zahtev[@status='PENDING']";
-        	String contextXPath = "//zahtev/@status";
+        	String statusXPath = "//zahtev/@status";        	
+        	String datumXPath = "//zahtev/@datobrade";
+        	String imeXPath = "//zahtev/@ime";
+        	String prezimeXPath = "//zahtev/@prezime";
+        	String obrazlozenjeXPath = "//zahtev/@obrazlozenje";
         	
         	String patch = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
         				   + "\" >" + "<xu:update select=\"%1$s\">%2$s</xu:update>"
@@ -198,10 +201,30 @@ public class A1Repository {
             XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
             xupdateService.setProperty("indent", "yes");
             
-            String update = String.format(patch, contextXPath, status);
-            System.out.println("[INFO] Updating " + contextXPath + " node.");
-            long mods = xupdateService.updateResource(documentId, update);
-            System.out.println("[INFO] " + mods + " modifications processed.");
+            String update1 = String.format(patch, statusXPath, resenjeDTO.getStatus());
+            System.out.println("[INFO] Updating " + statusXPath + " node.");
+            long mods1 = xupdateService.updateResource(documentId, update1);
+            System.out.println("[INFO] " + mods1 + " modifications processed.");
+            
+            String update2 = String.format(patch, datumXPath, resenjeDTO.getDatum());
+            System.out.println("[INFO] Updating " + datumXPath + " node.");
+            long mods2 = xupdateService.updateResource(documentId, update2);
+            System.out.println("[INFO] " + mods2 + " modifications processed.");
+            
+            String update3 = String.format(patch, imeXPath, resenjeDTO.getIme());
+            System.out.println("[INFO] Updating " + imeXPath + " node.");
+            long mods3 = xupdateService.updateResource(documentId, update3);
+            System.out.println("[INFO] " + mods3 + " modifications processed.");
+            
+            String update4 = String.format(patch, prezimeXPath, resenjeDTO.getPrezime());
+            System.out.println("[INFO] Updating " + prezimeXPath + " node.");
+            long mods4 = xupdateService.updateResource(documentId, update4);
+            System.out.println("[INFO] " + mods4 + " modifications processed.");
+            
+            String update5 = String.format(patch, obrazlozenjeXPath, resenjeDTO.getObrazlozenje());
+            System.out.println("[INFO] Updating " + obrazlozenjeXPath + " node.");
+            long mods5 = xupdateService.updateResource(documentId, update5);
+            System.out.println("[INFO] " + mods5 + " modifications processed.");
         	
         } catch (Exception e) {
        

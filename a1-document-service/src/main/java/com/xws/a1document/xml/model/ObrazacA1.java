@@ -96,9 +96,53 @@ public class ObrazacA1 {
         protected String naslov;
         @XmlAttribute(name = "status")
         @XmlSchemaType(name = "anySimpleType")
-        protected String status;
+        protected String status;        
+        @XmlAttribute(name = "datobrade")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String datumObrade;
+        @XmlAttribute(name = "ime")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String ime;
+        @XmlAttribute(name = "prezime")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String prezime;
+        @XmlAttribute(name = "obrazlozenje")
+        @XmlSchemaType(name = "anySimpleType")
+        protected String obrazlozenje;
+        
+        public String getDatumObrade() {
+			return datumObrade;
+		}
 
-        public String getStatus() {
+		public void setDatumObrade(String datumObrade) {
+			this.datumObrade = datumObrade;
+		}
+
+		public String getIme() {
+			return ime;
+		}
+
+		public void setIme(String ime) {
+			this.ime = ime;
+		}
+
+		public String getPrezime() {
+			return prezime;
+		}
+
+		public void setPrezime(String prezime) {
+			this.prezime = prezime;
+		}
+
+		public String getObrazlozenje() {
+			return obrazlozenje;
+		}
+
+		public void setObrazlozenje(String obrazlozenje) {
+			this.obrazlozenje = obrazlozenje;
+		}
+
+		public String getStatus() {
 			return status;
 		}
 
