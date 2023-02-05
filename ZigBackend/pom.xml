@@ -97,10 +97,22 @@
 			<version>11.4</version>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>apache-jena-libs</artifactId>
 			<version>3.14.0</version>
+		</dependency> -->
+		
+		 <dependency>
+		    <groupId>org.apache.jena</groupId>
+		    <artifactId>jena-arq</artifactId>
+		    <version>3.13.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.jena</groupId>
+		    <artifactId>jena-arq</artifactId>
+		    <version>3.13.0</version>
 		</dependency>
 
 		<dependency>
@@ -134,32 +146,7 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${project.parent.version}</version>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jaxb2-maven-plugin</artifactId>
-				<version>2.5.0</version>
-				<executions>
-					<execution>
-						<id>xjc</id>
-						<goals>
-							<goal>xjc</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<packageName>Z1Classes</packageName>
-					<sources>
-						<source>src/main/resources/Z1.xsd</source>
-					</sources>
-					<outputDirectory>${basedir}/src/main/java/com/example/ZigBackend/gen</outputDirectory>
-					<clearOutputDir>true</clearOutputDir>
-				</configuration>
-			</plugin>
+			
 		</plugins>
 	</build>
 
