@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import main.java.com.xws.a1document.dto.MetadataSearch;
 import main.java.com.xws.a1document.dto.ObrazacA1DTO;
 import main.java.com.xws.a1document.dto.ResenjeDTO;
 import main.java.com.xws.a1document.service.A1Service;
@@ -79,6 +80,17 @@ public class A1Controller {
 		return new ResponseEntity<>(obrasci, HttpStatus.OK);
 	}
 	
+	@PostMapping(value="searchMetadata", produces="application/xml", consumes="application/xml")
+	public ResponseEntity<?> searchMetadata(@RequestBody MetadataSearch metadata) throws Exception {
+		List<ObrazacA1> obrasci = new ArrayList<ObrazacA1>();
+		try {
+			obrasci = a1Service.searchMetadata(metadata);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(obrasci, HttpStatus.OK);
+	}
+	
 	@PostMapping(value="approved", consumes = "application/xml")
 	public ResponseEntity<?> approveZahtev(@RequestBody ResenjeDTO resenjeDTO) throws Exception {
 		a1Service.approveZahtev(resenjeDTO);
@@ -113,6 +125,6 @@ public class A1Controller {
     public ResponseEntity<?> generateXhtml(@RequestParam String id) throws Exception {
     	File html = xhtmlService.getXhtml(id);
     	return new ResponseEntity<>(new FileSystemResource(html), HttpStatus.OK);
-    }
+    }    
 	
 }

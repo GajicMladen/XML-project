@@ -3,15 +3,20 @@ package main.java.com.xws.a1document.service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import java.util.List;
 
+import org.apache.jena.base.Sys;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.update.UpdateExecutionFactory;
@@ -20,6 +25,7 @@ import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
 import org.springframework.stereotype.Service;
 
+import main.java.com.xws.a1document.dto.MetadataSearch;
 import main.java.com.xws.a1document.util.FusekiAuthUtilities;
 import main.java.com.xws.a1document.util.SparqlUtil;
 import main.java.com.xws.a1document.xml.model.ObrazacA1;
@@ -103,5 +109,36 @@ public class RdfService {
         return out.toString();		
 	}
 	
+	public List<ObrazacA1> metadataSearch(MetadataSearch metadata) throws Exception {
+		FusekiAuthUtilities.ConnectionProperties conn = FusekiAuthUtilities.loadProperties();
+		StringBuilder sparqlQuery = new StringBuilder("SELECT * FROM <http://localhost:8079/fuseki/DocumentADataset/data/metadata> WHERE {");
+		// Query = SELECT * FROM <http://localhost:8079/fuseki/DocumentADataset/data/metadata> WHERE { VALUES ?subject { <http://www.tim777.com/a/A-20230204222150> } ?subject ?predicate ?object . }
+		sparqlQuery.append("?subject <http://www.tim777.com/a/broj_prijave> ?broj_prijave . ");
+		sparqlQuery.append("FILTER(");
+		sparqlQuery.append(String.format("!CONTAINS(?%s,'%s')", metadata.getFirst_type(), metadata.getFirst_value()));
+		sparqlQuery.append(")}");
+        System.out.println(sparqlQuery);
+        QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery.toString());
+        ResultSet results = query.execSelect();
+        String varName;
+        RDFNode varValue;
+        while(results.hasNext()) {
+            // A single answer from a SELECT sparqlQuery
+        	QuerySolution querySolution = results.next();
+        	Iterator<String> variableBindings = querySolution.varNames();
+            // Retrieve variable bindings
+            while (variableBindings.hasNext()) {
+            	varName = variableBindings.next();
+                varValue = querySolution.get(varName);
+                System.out.println(varName);
+                System.out.println(varValue);
+                System.out.println("********************");
+            }            
+        }
+		return null;
+	}
 	
+	//
+	//SELECT * FROM <http://localhost:8079/fuseki/DocumentADataset/data/metadata>
+		//WHERE{ ?data <http://www.tim777.com/a/broj_prijave> ?broj_prijave . FILTER(CONTAINS(?broj_prijave,'A-20230203012800'))}
 }
