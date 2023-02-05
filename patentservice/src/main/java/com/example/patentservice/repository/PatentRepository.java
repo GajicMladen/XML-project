@@ -1,12 +1,16 @@
 package com.example.patentservice.repository;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.patentservice.beans.ZahtevZaPriznanjePatenta;
@@ -66,5 +70,31 @@ public class PatentRepository {
 			e.printStackTrace();
 		}
 		return ret;
+	}
+	
+	public List<XMLResource> getZahtevList(String status) throws Exception {
+		List<XMLResource> ret = new ArrayList<XMLResource>();
+		ResourceSet res = existManager.getZahteviByStatus(COLLECTION_ID, status);
+		ResourceIterator i = res.getIterator();
+		while (i.hasMoreResources()) {
+			XMLResource resource = (XMLResource) i.nextResource();
+			ret.add(resource);
+		}
+		return ret;
+	}
+	
+	public List<XMLResource> getPatentSearch(String query) throws Exception {
+		List<XMLResource> ret = new ArrayList<XMLResource>();
+		ResourceSet res = existManager.search(COLLECTION_ID, query);
+		ResourceIterator i = res.getIterator();
+		while (i.hasMoreResources()) {
+			XMLResource resource = (XMLResource) i.nextResource();
+			ret.add(resource);
+		}
+		return ret;
+	}
+	
+	public XMLResource getPatentById(String id) throws Exception {
+		return existManager.load(COLLECTION_ID, id);
 	}
 }

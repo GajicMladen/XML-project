@@ -124,7 +124,7 @@ public class ExistManager {
 		try {
 			col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
 			col.setProperty(OutputKeys.INDENT, "yes");
-			res = (XMLResource) col.getResource(documentId);
+			res = (XMLResource) col.getResource(documentId + ".xml");
 			return res;
 		} finally {
 			if(col != null)
@@ -183,8 +183,11 @@ public class ExistManager {
     	
         XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
         xqueryService.setProperty("indent", "yes");
-		
-        String xPathExp = "//*[status_zahteva='" + status + "']/ancestor::*";          
+		String xPathExp;
+        if (!status.equals("all"))
+        	xPathExp = "//zahtev_za_priznanje_patenta/podaci_zavod[status_zahteva='" + status + "']/ancestor::*";          
+        else
+        	xPathExp = "//zahtev_za_priznanje_patenta";
         
         ResourceSet result = xqueryService.query(xPathExp);
 		return result;

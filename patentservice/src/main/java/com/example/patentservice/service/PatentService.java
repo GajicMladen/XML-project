@@ -1,12 +1,16 @@
 package com.example.patentservice.service;
 
+import static com.example.patentservice.utils.PatentIdGenerator.generateId;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -48,8 +52,6 @@ import com.example.patentservice.dto.Zahtev;
 import com.example.patentservice.grddl.PatentMetadataExtractor;
 import com.example.patentservice.repository.PatentRepository;
 import com.example.patentservice.utils.SparqlUtil;
-
-import static com.example.patentservice.utils.PatentIdGenerator.*;
 
 import net.sf.saxon.TransformerFactoryImpl;
 
@@ -264,12 +266,39 @@ public class PatentService {
 		} catch (DatatypeConfigurationException e) {
 			e.printStackTrace();
 		}
-        
-	        
-        
-        
-		
-
+	}
+	
+	public List<ZahtevZaPriznanjePatenta> getAllZahtevi(String status) {
+		List<ZahtevZaPriznanjePatenta> ret = new ArrayList<ZahtevZaPriznanjePatenta>();
+		try {
+			List<XMLResource> resources = patentRepository.getZahtevList(status);
+			for (XMLResource res: resources)
+				ret.add(this.getMarshalledZahtev(res));
+		} catch (Exception e) {
+			return ret;
+		}
+		return ret;
+	}
+	
+	public List<ZahtevZaPriznanjePatenta> searchPatents(String query) {
+		List<ZahtevZaPriznanjePatenta> ret = new ArrayList<ZahtevZaPriznanjePatenta>();
+		try {
+			List<XMLResource> resources = patentRepository.getPatentSearch(query);
+			for (XMLResource res: resources)
+				ret.add(this.getMarshalledZahtev(res));
+		} catch (Exception e) {
+			return ret;
+		}
+		return ret;
+	}
+	
+	public ZahtevZaPriznanjePatenta getZahtevById(String id) {
+		try {
+			XMLResource res = patentRepository.getPatentById(id);
+			return getMarshalledZahtev(res);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 }
