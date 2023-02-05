@@ -16,6 +16,14 @@ import javax.xml.bind.Marshaller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import main.java.com.xws.a1document.dto.MetadataSearch;
 import main.java.com.xws.a1document.dto.ObrazacA1DTO;
 import main.java.com.xws.a1document.dto.ResenjeDTO;
@@ -353,6 +361,33 @@ public class A1Service {
 		List<ObrazacA1> obrasci = new ArrayList<ObrazacA1>();
 		rdfService.metadataSearch(metadata);
 		return obrasci;
+	}
+
+	public File generateReport() throws Exception {		
+        int numApproved = a1Repository.getAllZahtevi("APPROVED").size();
+        int numDenied = a1Repository.getAllZahtevi("DENIED").size();
+        int numPending = a1Repository.getAllZahtevi("PENDING").size();
+        int total = numApproved + numDenied + numPending;        
+        File pdfFile = null;
+        String text1 = "Broj podnetih zahteva: ";
+        String text2 = "Broj prihvacenih zahteva: ";
+        String text3 = "Broj odbijenih zahteva: ";
+        try {
+            pdfFile = new File("report.pdf");
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
+            document.open();
+
+            document.add(new Paragraph(text1 + total));
+            document.add(new Paragraph(text2 + numApproved));
+            document.add(new Paragraph(text3 + numDenied));
+
+            document.close();
+            System.out.println("Report file created");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pdfFile;		
 	}
 	
 	

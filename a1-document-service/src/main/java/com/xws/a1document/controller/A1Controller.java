@@ -73,7 +73,18 @@ public class A1Controller {
 	public ResponseEntity<?> search(@RequestParam String query) {
 		List<ObrazacA1> obrasci = new ArrayList<ObrazacA1>();
 		try {
-			obrasci = existService.search(query, ExistAuthUtilities.loadProperties());
+			obrasci = existService.search(query, "PENDING", ExistAuthUtilities.loadProperties());
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(obrasci, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="searchApproved", produces = "application/xml")
+	public ResponseEntity<?> searchApproved(@RequestParam String query) {
+		List<ObrazacA1> obrasci = new ArrayList<ObrazacA1>();
+		try {
+			obrasci = existService.search(query, "APPROVED", ExistAuthUtilities.loadProperties());
 		} catch (Exception e) { 
 			e.printStackTrace();
 		}
@@ -125,6 +136,12 @@ public class A1Controller {
     public ResponseEntity<?> generateXhtml(@RequestParam String id) throws Exception {
     	File html = xhtmlService.getXhtml(id);
     	return new ResponseEntity<>(new FileSystemResource(html), HttpStatus.OK);
-    }    
+    }
+    
+    @GetMapping(value="getReport")
+    public ResponseEntity<?> generateReport() throws Exception {
+    	File report = a1Service.generateReport();
+    	return new ResponseEntity<>(new FileSystemResource(report) , HttpStatus.OK);
+    }
 	
 }

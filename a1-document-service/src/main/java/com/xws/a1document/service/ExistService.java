@@ -195,7 +195,7 @@ public class ExistService {
         }
     }
 
-	public List<ObrazacA1> search(String query, ConnectionProperties conn) throws ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
+	public List<ObrazacA1> search(String query, String status, ConnectionProperties conn) throws ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
 		Class<?> cl = Class.forName(conn.driver);
 		Database database = (Database) cl.newInstance();
         database.setProperty("create-database", "true");
