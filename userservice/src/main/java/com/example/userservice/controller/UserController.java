@@ -42,7 +42,6 @@ public class UserController {
 	
 	@PostMapping(value = "login", produces="application/xml", consumes="application/xml")
 	public ResponseEntity<?> login(@RequestBody JwtAuthenticationRequest authenticationRequest, HttpServletResponse response) {
-		System.out.println("AA");
 		Authentication auth;
 		try {
 			auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(

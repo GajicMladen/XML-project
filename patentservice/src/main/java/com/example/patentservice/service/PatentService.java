@@ -1,16 +1,24 @@
 package com.example.patentservice.service;
 
+import static com.example.patentservice.utils.PatentIdGenerator.generateId;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -38,7 +46,9 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.patentservice.beans.ZahtevZaPriznanjePatenta;
+import com.example.patentservice.beans.ZahtevZaPriznanjePatenta.PodaciZavod;
 import com.example.patentservice.db.FusekiManager;
+import com.example.patentservice.dto.Zahtev;
 import com.example.patentservice.grddl.PatentMetadataExtractor;
 import com.example.patentservice.repository.PatentRepository;
 import com.example.patentservice.utils.SparqlUtil;
@@ -64,6 +74,9 @@ public class PatentService {
 	
 	@Autowired
 	private PatentRepository patentRepository;
+	
+	@Autowired
+	private DTOConverter dtoConverter;
 	
 	@Autowired
 	private FusekiManager fusekiManager;
@@ -216,4 +229,76 @@ public class PatentService {
 			return false;
 		}
 	}
+	
+	public ZahtevZaPriznanjePatenta convertDTOToBean(Zahtev dto) {
+		ZahtevZaPriznanjePatenta zp = new ZahtevZaPriznanjePatenta();
+		
+		dtoConverter.setNazivPronalaskaDTO(zp, dto);
+		dtoConverter.setPodnosilacDTO(zp, dto);
+		dtoConverter.setPronalazacDTO(zp, dto);
+		dtoConverter.setPunomocnikDTO(zp, dto);
+		dtoConverter.setAdresaDostavaDTO(zp, dto);
+		dtoConverter.setNacinDostavljanjaDTO(zp, dto);
+		dtoConverter.setDopunaDTO(zp, dto);
+		dtoConverter.setDetaljiRanijihPrijavaDTO(zp, dto);
+		
+		return zp;
+	}
+	
+	public void writePatentBeanToDb(ZahtevZaPriznanjePatenta zahtev) {
+		PodaciZavod pz = new PodaciZavod();
+		pz.setSluzbenik("nije naveden");
+		pz.setStatusZahteva("pending");
+		pz.setObrazlozenje("nije naveden");
+		DatatypeFactory df;
+		try {
+			df = DatatypeFactory.newInstance();
+			XMLGregorianCalendar now = df.newXMLGregorianCalendar(new GregorianCalendar());
+			pz.setDatumPrijema(now);
+			
+			GregorianCalendar undefined = new GregorianCalendar();
+			undefined.set(5555, 11, 31, 21, 59, 59);
+			pz.setDatumPodnosenja(df.newXMLGregorianCalendar(undefined));
+
+			pz.setBrojPrijave(generateId(patentRepository.getCount()));
+			zahtev.setPodaciZavod(pz);
+			patentRepository.saveZahtevToDB(zahtev);
+		} catch (DatatypeConfigurationException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public List<ZahtevZaPriznanjePatenta> getAllZahtevi(String status) {
+		List<ZahtevZaPriznanjePatenta> ret = new ArrayList<ZahtevZaPriznanjePatenta>();
+		try {
+			List<XMLResource> resources = patentRepository.getZahtevList(status);
+			for (XMLResource res: resources)
+				ret.add(this.getMarshalledZahtev(res));
+		} catch (Exception e) {
+			return ret;
+		}
+		return ret;
+	}
+	
+	public List<ZahtevZaPriznanjePatenta> searchPatents(String query) {
+		List<ZahtevZaPriznanjePatenta> ret = new ArrayList<ZahtevZaPriznanjePatenta>();
+		try {
+			List<XMLResource> resources = patentRepository.getPatentSearch(query);
+			for (XMLResource res: resources)
+				ret.add(this.getMarshalledZahtev(res));
+		} catch (Exception e) {
+			return ret;
+		}
+		return ret;
+	}
+	
+	public ZahtevZaPriznanjePatenta getZahtevById(String id) {
+		try {
+			XMLResource res = patentRepository.getPatentById(id);
+			return getMarshalledZahtev(res);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 }

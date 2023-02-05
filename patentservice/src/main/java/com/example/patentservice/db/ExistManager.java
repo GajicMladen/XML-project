@@ -11,17 +11,20 @@ import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
+import org.xmldb.api.modules.XQueryService;
 import org.xmldb.api.modules.XUpdateQueryService;
 
 @Component
 public class ExistManager {
 	
-	private final static String TARGET_NAMESPACE = "http://http://www.tim777.com";
+	private final static String TARGET_NAMESPACE = "";
 	
 	public static final String UPDATE = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
 			+ "\" xmlns=\"" + TARGET_NAMESPACE + "\">" + "<xu:update select=\"%1$s\">%2$s</xu:update>"
@@ -121,7 +124,7 @@ public class ExistManager {
 		try {
 			col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
 			col.setProperty(OutputKeys.INDENT, "yes");
-			res = (XMLResource) col.getResource(documentId);
+			res = (XMLResource) col.getResource(documentId + ".xml");
 			return res;
 		} finally {
 			if(col != null)
@@ -172,5 +175,96 @@ public class ExistManager {
 			if(col != null)
 				col.close();
 		}
+	}
+	
+	public ResourceSet getZahteviByStatus(String collectionUri, String status) throws Exception {
+		createConnection();
+        Collection col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
+    	
+        XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+        xqueryService.setProperty("indent", "yes");
+		String xPathExp;
+        if (!status.equals("all"))
+        	xPathExp = "//zahtev_za_priznanje_patenta/podaci_zavod[status_zahteva='" + status + "']/ancestor::*";          
+        else
+        	xPathExp = "//zahtev_za_priznanje_patenta";
+        
+        ResourceSet result = xqueryService.query(xPathExp);
+		return result;
+	}
+	
+	public String getCount(String collectionUri) throws Exception{
+		createConnection();
+        Collection col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
+    	
+        XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+        xqueryService.setProperty("indent", "yes");
+		
+        String xPathExp = "count(//zahtev_za_priznanje_patenta)";          
+        
+        ResourceSet result = xqueryService.query(xPathExp);
+        ResourceIterator i = result.getIterator();
+        Resource r = i.nextResource();
+        String count = (String)r.getContent();
+		return count;
+	}
+	
+//	public void solveRequest(String collectionUri, String id, String newStatus) throws Exception {
+//		createConnection();
+//		String documentId = id + ".xml";
+//        Collection col = null;
+//        
+//        try { 
+//        	String statusXPath = "//status_zahteva";        	
+//        	String datumXPath = "//datum_podnosenja";
+//        	String imeXPath = "//sluzbenik";
+//        	String obrazlozenjeXPath = "//obrazlozenje";
+//        	
+//        	String patch = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
+//        				   + "\" >" + "<xu:update select=\"%1$s\">%2$s</xu:update>"
+//        				   + "</xu:modifications>";
+//        	
+//        	col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
+//            col.setProperty("indent", "yes");
+//            XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
+//            xupdateService.setProperty("indent", "yes");
+//            
+//            String update1 = String.format(patch, statusXPath, resenjeDTO.getStatus());
+//            System.out.println("[INFO] Updating " + statusXPath + " node.");
+//            long mods1 = xupdateService.updateResource(documentId, update1);
+//            System.out.println("[INFO] " + mods1 + " modifications processed.");
+//            
+//            String update2 = String.format(patch, datumXPath, resenjeDTO.getDatum());
+//            System.out.println("[INFO] Updating " + datumXPath + " node.");
+//            long mods2 = xupdateService.updateResource(documentId, update2);
+//            System.out.println("[INFO] " + mods2 + " modifications processed.");
+//            
+//            String update3 = String.format(patch, imeXPath, resenjeDTO.getIme());
+//            System.out.println("[INFO] Updating " + imeXPath + " node.");
+//            long mods3 = xupdateService.updateResource(documentId, update3);
+//            System.out.println("[INFO] " + mods3 + " modifications processed.");
+//            
+//            String update4 = String.format(patch, obrazlozenjeXPath, resenjeDTO.getObrazlozenje());
+//            System.out.println("[INFO] Updating " + obrazlozenjeXPath + " node.");
+//            long mods4 = xupdateService.updateResource(documentId, update5);
+//            System.out.println("[INFO] " + mods5 + " modifications processed.");
+//        	
+//        } catch (Exception e) {
+//       
+//		}
+//        
+//	}
+	
+	public ResourceSet search(String collectionUri, String query) throws ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
+		createConnection();
+		Collection col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
+    	
+        XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+        xqueryService.setProperty("indent", "yes");
+		
+        String xPathExp = "/*[contains(., '" + query + "')]";     
+        
+        ResourceSet result = xqueryService.query(xPathExp);
+		return result;
 	}
 }

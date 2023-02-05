@@ -1,56 +1,55 @@
 package com.example.patentservice.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.example.patentservice.beans.ZahtevZaPriznanjePatenta;
+import com.example.patentservice.dto.Zahtev;
 import com.example.patentservice.service.PatentService;
 
-@Controller
-@RequestMapping(value = "api/patent/")
+
+@RestController
+@RequestMapping(value = "api/patent")
 public class PatentController {
+	
+	public static final String COLLECTION_ID = "db/sample/patent";
 	
 	@Autowired
 	private PatentService patentService;
 	
-	@PostMapping(value = "writeXMLFiletoDB/{patentId}")
-	public ResponseEntity<?> writeXMLFileToDB(@PathVariable String patentId){
-		String filePath = "src/main/resources/data/" + patentId +".xml";
-		patentService.writeXMLFileToDB(filePath);
-		return new ResponseEntity<>(HttpStatus.OK);
+	@PostMapping(value = "/createPatent", produces = "application/xml", consumes = "application/xml")
+	public ResponseEntity<?> createPatent(@RequestBody Zahtev zahtev) {
+		ZahtevZaPriznanjePatenta zahtevBean = patentService.convertDTOToBean(zahtev);
+		patentService.writePatentBeanToDb(zahtevBean);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
 	
-	
-	@GetMapping(value = "readXMLfromDB/{patentId}", produces = "application/xml")
-	public ResponseEntity<?> readXMLfromDB(@PathVariable String patentId) {
-		String xml = patentService.readXMLfromDB(patentId);
-		if (xml == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		return new ResponseEntity<>(xml, HttpStatus.OK);
+	@GetMapping(value = "/getAllPatents/{status}", produces = "application/xml", consumes = "application/xml")
+	public ResponseEntity<?> getAllPatents(@PathVariable String status) {
+		List<ZahtevZaPriznanjePatenta> ret = patentService.getAllZahtevi(status);
+		return new ResponseEntity<>(ret, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "generatePDF/{patentId}")
-	public ResponseEntity<?> generatePDF(@PathVariable String patentId) {
-		boolean success = patentService.generatePDF(patentId);
-		if (!success) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		return new ResponseEntity<>(HttpStatus.OK);
+	@GetMapping(value = "/getPatentById/{id}", produces = "application/xml", consumes = "application/xml")
+	public ResponseEntity<?> getPatentById(@PathVariable String id) {
+		ZahtevZaPriznanjePatenta ret = patentService.getZahtevById(id);
+		if (ret == null)
+			return new ResponseEntity<>("<error>Patent nije pronadjen!</error>", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(ret, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "generateXHTML/{patentId}")
-	public ResponseEntity<?> generateXHTML(@PathVariable String patentId) {
-		boolean success = patentService.generateXHTML(patentId);
-		if (!success) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-	
-	@PostMapping(value = "writeMetadataRDF/{patentId}")
-	public ResponseEntity<?> writeMetadataRDF(@PathVariable String patentId) {
-		boolean success = patentService.writeMetadataRDF(patentId);
-		if (!success) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		return new ResponseEntity<>(HttpStatus.OK);
+	@GetMapping(value = "/search/{query}", produces = "application/xml", consumes = "application/xml")
+	public ResponseEntity<?> searchPatents(@PathVariable String query) {
+		List<ZahtevZaPriznanjePatenta> ret = patentService.searchPatents(query);
+		return new ResponseEntity<>(ret, HttpStatus.OK);
 	}
 }

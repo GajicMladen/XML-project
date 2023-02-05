@@ -80,6 +80,61 @@ public class A1Repository {
         }
     }
 	
+	public String getPodnosilacEmailById(String id) throws Exception {
+		String documentId = id + ".xml";
+        String collectionId = "/db/service/a/requests";
+        
+        ConnectionProperties conn = ExistAuthUtilities.loadProperties();
+        Class<?> cl = Class.forName(conn.driver);
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+        DatabaseManager.registerDatabase(database);
+        
+        Collection col = null;
+        XMLResource res = null;
+		ObrazacA1 obrazac = null;
+        
+		try {    
+        	System.out.println("[INFO] Retrieving the collection: " + collectionId);
+            col = DatabaseManager.getCollection(conn.uri + collectionId);
+            col.setProperty(OutputKeys.INDENT, "yes");
+            
+            System.out.println("[INFO] Retrieving the document: " + documentId);
+            res = (XMLResource)col.getResource(documentId);
+            
+            if(res == null) {
+                System.out.println("[WARNING] Document '" + documentId + "' can not be found!");
+            } else {
+            	System.out.println("[INFO] Binding XML resouce to an JAXB instance: ");
+                JAXBContext context = JAXBContext.newInstance("main.java.com.xws.a1document.xml.model");    			
+    			Unmarshaller unmarshaller = context.createUnmarshaller();    			
+    			obrazac = (ObrazacA1) unmarshaller.unmarshal(res.getContentAsDOM());    		
+    			return obrazac.getZahtev().getPodnosilac().getLice().getEmail();
+            }
+        } finally {
+            //don't forget to clean up!
+            
+            if(res != null) {
+                try { 
+                	((EXistResource)res).freeResources(); 
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+            
+            if(col != null) {
+                try { 
+                	col.close(); 
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+        }
+        
+		return "";
+	}
+	
+	
 	public ObrazacA1 getByBrojPrijave(String id) throws Exception {
 		String documentId = id + ".xml";
         String collectionId = "/db/service/a/requests";
@@ -134,6 +189,42 @@ public class A1Repository {
 		return obrazac;
 	}
 	
+	public String getByBrojPrijaveAsString(String document) throws Exception{
+		String documentId = document + ".xml";
+        String collectionId = "/db/service/a/requests";
+        ConnectionProperties conn = ExistAuthUtilities.loadProperties();
+        Class<?> cl = Class.forName(conn.driver);
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+        DatabaseManager.registerDatabase(database);
+        
+        Collection col = null;
+        XMLResource res = null;
+        try {
+        	col = DatabaseManager.getCollection(conn.uri + collectionId);
+            col.setProperty(OutputKeys.INDENT, "yes");
+            res = (XMLResource)col.getResource(documentId);          
+        } finally {
+            
+            if(res != null) {
+                try { 
+                	((EXistResource)res).freeResources(); 
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+            
+            if(col != null) {
+                try { 
+                	col.close(); 
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+        }
+        return (String) res.getContent();
+	}
+	
 	public List<ObrazacA1> getAllZahtevi(String status) throws Exception {
 		
 		ConnectionProperties conn = ExistAuthUtilities.loadProperties();
@@ -147,7 +238,6 @@ public class A1Repository {
         XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
         xqueryService.setProperty("indent", "yes");
 		
-        //String xPathExp = "//obrazac_a_1";
         String xPathExp = "//zahtev[@status='" + status + "']/ancestor::*";          
         
         ResourceSet result = xqueryService.query(xPathExp);

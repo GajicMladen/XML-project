@@ -1,6 +1,6 @@
-package test.java.com.xws.a1document;
+package com.xws.a1document;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest

@@ -56,13 +56,13 @@
 	                            <xsl:if test="string(//podnosilac/lice/ime)">
 	                            	<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podnosilac/lice/ime" /><xsl:text> </xsl:text><xsl:value-of select="//podnosilac/lice/prezime" /></h2>
 	                            	<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podnosilac/lice/adresa/ulica" /><xsl:text> </xsl:text><xsl:value-of select="//podnosilac/lice/adresa/broj" /></h2>
-	                            	<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podnosilac/lice/adresa/grad" /><xsl:text> </xsl:text><xsl:value-of select="//podnosilac/lice/adresa/postanski-kod" /></h2>
+	                            	<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podnosilac/lice/adresa/grad" /><xsl:text> </xsl:text><xsl:value-of select="//podnosilac/lice/adresa/postanski_kod" /></h2>
 	                            	<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podnosilac/lice/drzavljanstvo" /></h2>									
 								</xsl:if>
-								<xsl:if test="string(//podnosilac/lice/poslovno-ime)">
-									<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podnosilac/lice/poslovno-ime" /></h2>
+								<xsl:if test="string(//podnosilac/lice/poslovno_ime)">
+									<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podnosilac/lice/poslovno_ime" /></h2>
 									<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podnosilac/lice/sediste/adresa/ulica" /><xsl:text> </xsl:text><xsl:value-of select="//podnosilac/lice/sediste/adresa/broj" /></h2>
-									<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podnosilac/lice/sediste/adresa/grad" /><xsl:text> </xsl:text><xsl:value-of select="//podnosilac/lice/sediste/adresa/postanski-kod" /></h2>									
+									<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podnosilac/lice/sediste/adresa/grad" /><xsl:text> </xsl:text><xsl:value-of select="//podnosilac/lice/sediste/adresa/postanski_kod" /></h2>									
 								</xsl:if>	                            
 	                            <p style="text-indent: 0pt;text-align: left;"><br/></p>
 	                            <p style="text-indent: 0pt;text-align: left;"><br/></p>
@@ -87,7 +87,7 @@
 	                        <div style="margin-top: 10px;">
 	                            <p style="padding-left: 17pt;text-indent: -11pt;text-align: left;"> 2) Pseudonim ili znak autora, (ako ga ima):</p>
 	                            <br />
-	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//pseudonim-znak-autora" /></h2>
+	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//pseudonim_znak_autora" /></h2>
 	                            <p style="text-indent: 0pt;text-align: left;"><br/></p>
 	                        </div>                        
                     	</li>
@@ -97,8 +97,8 @@
 	                            <br />
 	                            <xsl:if test="string(//punomocnik/ime)">
 	                            	<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//punomocnik/ime" /><xsl:text> </xsl:text><xsl:value-of select="//punomocnik/prezime" /></h2>
-	                            	<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//punomocnik/adresa/ulica" /><xsl:text> </xsl:text><xsl:value-of select="//punomocnik/broj" /></h2>
-	                            	<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//punomocnik/adresa/grad" /><xsl:text> </xsl:text><xsl:value-of select="//punomocnik/postanski-broj" /></h2>																				
+	                            	<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//punomocnik/adresa/ulica" /><xsl:text> </xsl:text><xsl:value-of select="//punomocnik/adresa/broj" /></h2>
+	                            	<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//punomocnik/adresa/grad" /><xsl:text> </xsl:text><xsl:value-of select="//punomocnik/adresa/postanski_kod" /></h2>																				
 								</xsl:if>	                            
 	                            <p style="text-indent: 0pt;text-align: left;"><br/></p>
 	                        </div>                        
@@ -107,8 +107,8 @@
 	                        <div style="margin-top: 15px;">
 	                            <p style="padding-left: 6pt;text-indent: 0pt;text-align: left;"> 4) Naslov autorskog dela, odnosno alternativni naslov, ako ga ima, po kome autorsko delo može da se identifikuje*:</p>
 	                            <br />
-	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//naslov-autorskog-dela/naslov" /></h2>
-	                            <p class="s1" style="padding-left: 6pt;text-indent: 0pt;text-align: left; font-size: 12px;"><xsl:value-of select="//naslov-autorskog-dela/alternativni-naslov" /></p>
+	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//naslov_autorskog_dela/naslov" /></h2>
+	                            <p class="s1" style="padding-left: 6pt;text-indent: 0pt;text-align: left; font-size: 12px;"><xsl:value-of select="//naslov_autorskog_dela/alternativni_naslov" /></p>
 	                            <p style="text-indent: 0pt;text-align: left;"><br/></p>
 	                        </div>                    
 	                    </li>
@@ -116,8 +116,8 @@
 	                        <div style="margin-top: 15px; margin-right: 15px;">
 	                            <p style="padding-left: 6pt;text-indent: 0pt;text-align: left;"> 5) Podaci o naslovu autorskog dela na kome se zasniva delo prerade, ako je u pitanju autorsko delo prerade, kao i podatak o autoru izvornog dela:</p>
 	                            <br />
-	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//naslov-delo-prerade/naslov" /></h2>
-	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//naslov-delo-prerade/autor/ime" /><xsl:text> </xsl:text><xsl:value-of select="//naslov-delo-prerade/autor/prezime" /></h2>
+	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//naslov_delo_prerade/naslov" /></h2>
+	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//naslov_delo_prerade/autor/ime" /><xsl:text> </xsl:text><xsl:value-of select="//naslov_delo_prerade/autor/prezime" /></h2>
 	                            <p style="text-indent: 0pt;text-align: left;"><br/></p>
 	                        </div>                        
 	                    </li>
@@ -125,7 +125,7 @@
 	                        <div style="margin-top: 15px">
 	                            <p style="padding-top: 9pt;padding-left: 17pt;text-indent: -11pt;text-align: left;"> 6) Podaci o vrsti autorskog dela (književno delo, muzicko delo, likovno delo pacunarski program i dr.)*:</p>
 	                            <br />
-	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//vrsta-autorskog-dela" /></h2>
+	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//vrsta_autorskog_dela" /></h2>
 	                            <p style="text-indent: 0pt;text-align: left;"/>
 	                            <p style="text-indent: 0pt;text-align: left;"><br/></p>
 	                        </div>                        
@@ -134,7 +134,7 @@
 	                        <div style="margin-top: 15px;">
 	                            <p style="padding-top: 4pt;padding-left: 17pt;text-indent: -11pt;text-align: left;"> 7) Podaci o formi zapisa autorskog dela (štampani tekst, opticki disk i slicno)*:</p>
 	                            <br />
-	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//forma-zapisa-autorskog-dela" /></h2>
+	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//forma_zapisa_autorskog_dela" /></h2>
 	                            <p style="text-indent: 0pt;text-align: left;"><br/></p>
 	                        </div>                        
 	                    </li>
@@ -144,7 +144,15 @@
 	                                (grupe autora ili koautora), a ako su u pitanju jedan ili više autora koji nisu živi, imena autora i godina smrti autora, a ako je 
 	                                u pitanju autorsko delo anonimnog autora navod da je autorsko delo delo anonimnog autora:</p>
 	                            <br />
-	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"></h2>
+								<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podaci_o_autoru_nepodnosilac/autor/ime"/><xsl:text> </xsl:text><xsl:value-of select="//podaci_o_autoru_nepodnosilac/autor/prezime"/></h2>
+								<xsl:if test="string(//podaci_o_autoru_nepodnosilac/autor/godina_smrti)">
+									<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podaci_o_autoru_nepodnosilac/autor/godina_smrti"/></h2>									
+								</xsl:if>
+								<xsl:if test="string(//podaci_o_autoru_nepodnosilac/autor/drzavljanstvo)">
+									<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podaci_o_autoru_nepodnosilac/autor/adresa/ulica" /><xsl:text> </xsl:text><xsl:value-of select="//podaci_o_autoru_nepodnosilac/autor/adresa/broj" /></h2>
+									<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podaci_o_autoru_nepodnosilac/autor/adresa/grad" /><xsl:text> </xsl:text><xsl:value-of select="//podaci_o_autoru_nepodnosilac/autor/adresa/postanski_kod" /></h2>
+									<h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//podaci_o_autoru_nepodnosilac/autor/drzavljanstvo"/></h2>									
+								</xsl:if>	                            
 	                            <p style="text-indent: 0pt;text-align: left;"><br/></p>
 	                        </div>                        
 	                    </li>
@@ -152,7 +160,7 @@
 	                        <div style="margin-top: 15px;">
 	                            <p style="padding-top: 9pt;padding-left: 17pt;text-indent: -11pt;text-align: left;"> 9) Podatak da li je autorsko delo stvoreno u radnom odnosu:</p>
 	                            <br />
-	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//autorsko-delo-stvoreno-radnim-odnosom" /></h2>
+	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//autorsko_delo_stvoreno_radnim_odnosom" /></h2>
 	                            <p style="text-indent: 0pt;text-align: left;"><br/></p>
 	                        </div>                        
 	                    </li>
@@ -160,7 +168,7 @@
 	                        <div style="margin-top: 15px;">
 	                            <p style="padding-left: 23pt;text-indent: -17pt;text-align: left;"> 10) Nacin korišcenja autorskog dela ili nameravani nacin korišcenja autoskog dela:</p>
 	                            <br />
-	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//nacin-koriscenja" /></h2>
+	                            <h2 style="padding-left: 6pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//nacin_koriscenja" /></h2>
 	                            <p style="text-indent: 0pt;text-align: left;"><br/></p>
 	                        </div>                        
 	                    </li>
@@ -179,9 +187,11 @@
 	                            <li data-list-text="-">
 	                                <p style="padding-left: 12pt;text-indent: -6pt;text-align: left;">opis autorskog dela (ako je delo podneto na optickom disku)</p>
 	                                <p style="text-indent: 0pt;text-align: left;"><br/></p>
+									<h1 style="padding-left: 1pt;text-indent: 0pt;text-align: left;margin-left: 15px;"><xsl:value-of select="//prilozi/opis_autorskog_dela" /></h1>
 	                            </li>
 	                            <li data-list-text="-">
 	                                <p style="padding-left: 12pt;text-indent: -6pt;text-align: left;">primer autroskog dela (slika, video zapis, audio zapis)</p>
+									<h1 style="padding-left: 1pt;text-indent: 0pt;text-align: left;margin-left: 15px;"><xsl:value-of select="//prilozi/primer_autorskog_dela" /></h1>
 	                            </li>
 	                            </ul>
 	                        </div>
@@ -199,7 +209,7 @@
 	                            </th>
 	                            <th style="width: 50%; border: 1px solid black;">
 	                                <p style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: left;"><span style=" color: black; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">Broj prijave:</span></p>
-	                                <h1 style="padding-left: 1pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//broj-prijave" /></h1>
+	                                <h1 style="padding-left: 1pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//broj_prijave" /></h1>
 	                            </th>
 	                        </tr>
 	                        <tr>
@@ -207,7 +217,7 @@
 	                            </th>
 	                            <th style="width: 50%; border: 1px solid black;">
 	                                <p style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: left;"><span style=" color: black; font-family:Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt;">Datum podnošenja:</span></p>
-	                                <h1 style="padding-left: 1pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//datum-podnosenja" /></h1>
+	                                <h1 style="padding-left: 1pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//datum_podnosenja" /></h1>
 	                            </th>
 	                        </tr>
 	                    </table>                                      

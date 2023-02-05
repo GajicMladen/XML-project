@@ -1,6 +1,7 @@
 package main.java.com.xws.a1document.service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
@@ -57,6 +58,12 @@ public class A1Service {
 	
 	@Autowired
 	private RdfService rdfService;
+	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private PdfService pdfService;
 	
 	public ObrazacA1 getObrazacA1(ObrazacA1DTO o) {
 		ObrazacA1 obrazac = new ObrazacA1();
@@ -310,10 +317,24 @@ public class A1Service {
 	
 	public void approveZahtev(ResenjeDTO resenjeDTO) throws Exception {
 		a1Repository.solveRequest(resenjeDTO);
+		sendApprovedEmail(resenjeDTO.getId());
 	}
 	
 	public void denyZahtev(ResenjeDTO resenjeDTO) throws Exception {
 		a1Repository.solveRequest(resenjeDTO);
+		sendDeniedEmail(resenjeDTO.getId(), resenjeDTO.getObrazlozenje());
+	}
+	
+	public void sendApprovedEmail(String documentId) throws Exception {
+		File pdf = pdfService.getPdf(documentId);
+		String email = a1Repository.getPodnosilacEmailById(documentId);	
+		emailService.sendRequestApproved(email, pdf);
+	}
+	
+	public void sendDeniedEmail(String documentId, String reason) throws Exception {
+		File pdf = pdfService.getPdf(documentId);
+		String email = a1Repository.getPodnosilacEmailById(documentId);		
+		emailService.sendRequestDenied(email, reason, pdf);
 	}
 	
 	public String getMetadataById(String id, String type) throws Exception {
