@@ -21,7 +21,6 @@ import main.java.com.xws.a1document.dto.ResenjeDTO;
 import main.java.com.xws.a1document.service.A1Service;
 import main.java.com.xws.a1document.service.ExistService;
 import main.java.com.xws.a1document.service.PdfService;
-import main.java.com.xws.a1document.service.RdfService;
 import main.java.com.xws.a1document.service.XhtmlService;
 import main.java.com.xws.a1document.util.ExistAuthUtilities;
 import main.java.com.xws.a1document.xml.model.ObrazacA1;
