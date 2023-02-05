@@ -15,26 +15,27 @@ public class PatentMetadataExtractor {
 	final static private String PATENT_NAMESPACE = "http://www.tim777.com/patent";
 
     public static Model extract(ZahtevZaPriznanjePatenta zahtev) {
-        // broj_prijave
+        // status_zahteva
+    	// sluzbenik
+    	// obrazlozenje
+    	// broj_prijave
     	// datum_prijema
     	// datum_podnosenja
     	// podnosilac_email
-    	// pronalazac_email
-    	// punomocnik_email
     	// detalji_ranije_prijave
     	
         Model model = ModelFactory.createDefaultModel();
 
         Resource resource = model.createResource(PATENT_NAMESPACE + "/" + zahtev.getPodaciZavod().getBrojPrijave());
-
+        
+        addRDFTripletToModel(model, resource, "status_zahteva", zahtev.getPodaciZavod().getStatusZahteva());
+        addRDFTripletToModel(model, resource, "sluzbenik", zahtev.getPodaciZavod().getSluzbenik());
+        addRDFTripletToModel(model, resource, "obrazlozenje", zahtev.getPodaciZavod().getObrazlozenje());
         addRDFTripletToModel(model, resource, "broj_prijave", zahtev.getPodaciZavod().getBrojPrijave());
         addRDFTripletToModel(model, resource, "datum_prijema", zahtev.getPodaciZavod().getDatumPrijema().toString());
         addRDFTripletToModel(model, resource, "datum_podnosenja", zahtev.getPodaciZavod().getDatumPodnosenja().toString());
         addRDFTripletToModel(model, resource, "podnosilac_email", zahtev.getPodnosilacPrijave().getKontakt().getEMail());
-        if(zahtev.getPodaciOPronalazacu().getPronalazac() != null)
-            addRDFTripletToModel(model, resource, "pronalazac_email", zahtev.getPodaciOPronalazacu().getPronalazac().getKontakt().getEMail());
-        if(zahtev.getPunomocnik().getKontakt() != null)
-            addRDFTripletToModel(model, resource, "punomocnik_email", zahtev.getPunomocnik().getKontakt().getEMail());
+        
         
         for(TDetaljiRanijePrijave drp: zahtev.getPriznanjePravaPrvenstvaIzRanijihPrijava().getDetaljiRanijePrijave()) {
         	addRDFTripletToModel(model, resource, "detalji_ranije_prijave", drp.getBrojPrijave());

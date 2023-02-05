@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -48,6 +49,7 @@ import org.xmldb.api.modules.XMLResource;
 import com.example.patentservice.beans.ZahtevZaPriznanjePatenta;
 import com.example.patentservice.beans.ZahtevZaPriznanjePatenta.PodaciZavod;
 import com.example.patentservice.db.FusekiManager;
+import com.example.patentservice.dto.Resenje;
 import com.example.patentservice.dto.Zahtev;
 import com.example.patentservice.grddl.PatentMetadataExtractor;
 import com.example.patentservice.repository.PatentRepository;
@@ -119,10 +121,6 @@ public class PatentService {
 		}
 	}
 	
-	public void writeXMLFileToDB(String path) {
-		patentRepository.writeXMLFiletoDB(path);
-	}
-	
 	public String readXMLfromDB(String documentId) {
 		XMLResource xml = patentRepository.readXMLfromDB(documentId);
 		if(xml == null) return null;
@@ -136,10 +134,10 @@ public class PatentService {
 		return ret;
 	}
 	
-	public boolean generatePDF(String documentId) {
+	public File generatePDF(String documentId) {
 		try {
 			XMLResource xml = patentRepository.readXMLfromDB(documentId);
-			if(xml == null) return false;
+			if(xml == null) return null;
 			TransformerFactory transformerFactory = new TransformerFactoryImpl();
 			FopFactory fopFactory = FopFactory.newInstance(new File(FOP_CONF_PATH));
 			File xsl = new File(XSL_FO_PATH);
@@ -163,19 +161,19 @@ public class PatentService {
 			OutputStream out = new BufferedOutputStream(new FileOutputStream(pdfFile));
 			out.write(outStream.toByteArray());
 			out.close();
-			return true;
+			return pdfFile;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 		
 	}
 	
-	public boolean generateXHTML(String documentId) {
+	public File generateXHTML(String documentId) {
 		try {
 			XMLResource xml = patentRepository.readXMLfromDB(documentId);
-			if (xml == null) return false;
+			if (xml == null) return null;
 			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
 			documentFactory.setNamespaceAware(true);
 			documentFactory.setIgnoringComments(true);
@@ -195,18 +193,17 @@ public class PatentService {
 			DOMSource source = new DOMSource(document);
 			StreamResult result = new StreamResult(new FileOutputStream(GENERATED_PATH + documentId + ".html"));
 			transformer.transform(source, result);
-			return true;
+			
+			File file = new File(GENERATED_PATH + documentId + ".html");
+			return file;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 	
-	public boolean writeMetadataRDF(String documentId) {
+	public boolean writeMetadataRDF(ZahtevZaPriznanjePatenta zahtev) {
 		try {
-			XMLResource xml = patentRepository.readXMLfromDB(documentId);
-			if (xml == null) return false;
-			ZahtevZaPriznanjePatenta zahtev = getMarshalledZahtev(xml);
 			Model model = PatentMetadataExtractor.extract(zahtev);
 			
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -263,6 +260,19 @@ public class PatentService {
 			pz.setBrojPrijave(generateId(patentRepository.getCount()));
 			zahtev.setPodaciZavod(pz);
 			patentRepository.saveZahtevToDB(zahtev);
+			writeMetadataRDF(zahtev);
+		} catch (DatatypeConfigurationException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void writeResenjeBeanToDb(Resenje resenje) {
+		GregorianCalendar c = new GregorianCalendar();
+		c.setTime(new Date());
+		try {
+			XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+			resenje.setDatumResenja(date2);
+			patentRepository.saveResenjeToDB(resenje);
 		} catch (DatatypeConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -292,6 +302,27 @@ public class PatentService {
 		return ret;
 	}
 	
+	public List<ZahtevZaPriznanjePatenta> searchPatents(String query, String status) {
+		List<ZahtevZaPriznanjePatenta> ret = new ArrayList<ZahtevZaPriznanjePatenta>();
+		try {
+			if(query.equals("")) ret =  getAllZahtevi("all");
+			else {
+				List<XMLResource> resources = patentRepository.getPatentSearch(query);
+				for (XMLResource res: resources)
+					ret.add(this.getMarshalledZahtev(res));
+			}
+		} catch (Exception e) {
+			return ret;
+		}
+		if (status.equals("all")) return ret;
+		List<ZahtevZaPriznanjePatenta>realRet = new ArrayList<ZahtevZaPriznanjePatenta>();
+		for(ZahtevZaPriznanjePatenta z : ret) {
+			if (z.getPodaciZavod().getStatusZahteva().equals(status))
+				realRet.add(z);
+		}
+		return realRet;
+	}
+	
 	public ZahtevZaPriznanjePatenta getZahtevById(String id) {
 		try {
 			XMLResource res = patentRepository.getPatentById(id);
@@ -300,5 +331,16 @@ public class PatentService {
 			return null;
 		}
 	}
+	
+	public String getMetadataById(String id, String type) throws Exception {
+		if(type.equals("JSON")) {
+			String sparqlQuery = "VALUES ?subject { <" + "http://www.tim777.com/patent/" + id + "> } ?subject ?predicate ?object .";
+            return fusekiManager.getJsonMetadata(sparqlQuery);
+		} else {
+			String sparqlQuery = "<http://www.tim777.com/patent/" + id + "> ?predicate ?object .";
+            return fusekiManager.getRdfMetadata(sparqlQuery);
+		}
+	}
+	
 	
 }
