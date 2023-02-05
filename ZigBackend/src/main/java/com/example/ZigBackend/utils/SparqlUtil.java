@@ -41,13 +41,21 @@ public class SparqlUtil {
 	public static String insertData(String ntriples) {
 		return String.format(UPDATE_TEMPLATE, ntriples);
 	}
-	
+
+	public static final String CONSTRUCT_NAMED_GRAPH_TEMPLATE = "CONSTRUCT FROM <%1$s> WHERE { %2$s }";
+
+
 	public static String insertData(String graphURI, String ntriples) {
 		return String.format(UPDATE_TEMPLATE_NAMED_GRAPH, graphURI, ntriples);
 	}
-	
+
 	public static String selectData(String graphURI, String sparqlCondition) {
 		return String.format(SELECT_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
 	}
-	
+
+	public static String constructData(String graphURI, String sparqlCondition) {
+		return String.format(CONSTRUCT_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
+
+	}
+
 }

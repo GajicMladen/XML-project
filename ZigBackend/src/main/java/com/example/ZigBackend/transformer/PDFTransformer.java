@@ -13,9 +13,11 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.fop.apps.*;
+import org.exist.xmldb.RemoteXMLResource;
 import org.xml.sax.SAXException;
 
 import net.sf.saxon.TransformerFactoryImpl;
+import org.xmldb.api.modules.XMLResource;
 
 import static org.apache.fop.fonts.type1.AdobeStandardEncoding.e;
 
@@ -112,5 +114,53 @@ public class PDFTransformer {
             newFile.createNewFile();
         }
         return newFile;
+    }
+
+
+
+    public File generatePDFFromXML(RemoteXMLResource xmlResource) throws Exception {
+
+        System.out.println("[INFO] " + PDFTransformer.class.getSimpleName());
+
+        // Point to the XSL-FO file
+        File xslFile = loadFile(XSL_FILE);
+
+        // Create transformation source
+        StreamSource transformSource = new StreamSource(xslFile);
+
+        // Initialize the transformation subject
+        StreamSource source = new StreamSource( xmlResource.getStreamContent() );
+
+        // Initialize user agent needed for the transformation
+        FOUserAgent userAgent = fopFactory.newFOUserAgent();
+
+        // Create the output stream to store the results
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+
+        // Initialize the XSL-FO transformer object
+        Transformer xslFoTransformer = transformerFactory.newTransformer(transformSource);
+
+        // Construct FOP instance with desired output format
+        Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, userAgent, outStream);
+
+        // Resulting SAX events
+        Result res = new SAXResult(fop.getDefaultHandler());
+
+        // Start XSLT transformation and FOP processing
+        xslFoTransformer.transform(source, res);
+
+        // Generate PDF file
+        File pdfFile = createNewFile("test.pdf");
+
+        OutputStream out = new BufferedOutputStream(Files.newOutputStream(pdfFile.toPath()));
+        out.write(outStream.toByteArray());
+
+        System.out.println("[INFO] File \"" + pdfFile.getCanonicalPath() + "\" generated successfully.");
+        out.close();
+
+        System.out.println("[INFO] End.");
+
+        return pdfFile;
+
     }
 }

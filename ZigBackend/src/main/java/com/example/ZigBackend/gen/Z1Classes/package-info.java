@@ -5,5 +5,5 @@
 // Generated on: 2023.01.11 at 12:28:33 AM CET 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.tim777.rs/dokumentZ1", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@javax.xml.bind.annotation.XmlSchema(namespace = "", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package com.example.ZigBackend.gen.Z1Classes;

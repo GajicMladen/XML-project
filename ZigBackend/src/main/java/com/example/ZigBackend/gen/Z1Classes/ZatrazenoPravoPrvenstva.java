@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlType;
     "pravo",
     "osnov"
 })
-@XmlRootElement(name = "zatrazeno_pravo_prvenstva")
+@XmlRootElement(name = "zatrazenoPravoPrvenstva")
 public class ZatrazenoPravoPrvenstva {
 
     @XmlElement(required = true)

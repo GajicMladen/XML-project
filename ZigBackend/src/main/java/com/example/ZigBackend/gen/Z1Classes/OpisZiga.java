@@ -41,10 +41,10 @@ import javax.xml.bind.annotation.XmlType;
     "tipZiga",
     "znak"
 })
-@XmlRootElement(name = "opis_ziga")
+@XmlRootElement(name = "opisZiga")
 public class OpisZiga {
 
-    @XmlElement(name = "tip_ziga", required = true)
+    @XmlElement(name = "tipZiga", required = true)
     @XmlSchemaType(name = "string")
     protected TTipZiga tipZiga;
     @XmlElement(required = true)

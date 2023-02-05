@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.JAXBException;
 import java.io.*;
+import java.util.List;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.InputStreamResource;
+import org.xmldb.api.base.XMLDBException;
 
 
 @Controller
@@ -60,6 +62,7 @@ public class ZigController {
     @PostMapping(value = "saveXML",consumes = "application/xml")
     public ResponseEntity<String> saveRealXML(@RequestBody ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga){
         zahtevZaPriznanjeZiga =  zigService.saveXMLinDB(zahtevZaPriznanjeZiga);
+
         return new ResponseEntity<>(zahtevZaPriznanjeZiga.toString(),HttpStatus.OK);
     }
 
@@ -105,10 +108,69 @@ public class ZigController {
             return ResponseEntity.internalServerError().body(null);
         }
     }
-    @GetMapping("/downloadHTML")
+    @GetMapping(value = "/downloadHTML",produces = "application/xml")
     public ResponseEntity<Resource> downloadHTML(){
         try {
             File htmlFIle = zigService.getTestHTMLFile();
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(htmlFIle));
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + htmlFIle.getName())
+                    .contentType(MediaType.APPLICATION_XML)
+                    .contentLength(htmlFIle.length())
+                    .body(resource);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
+    @GetMapping(value = "getZahtev")
+    public ResponseEntity<ZahtevZaPriznanjeZiga> getZahtev(){
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigService.getZahtevById("Z-20230402194233");
+        System.out.println(zahtevZaPriznanjeZiga.toString());
+        return  ResponseEntity.ok(zahtevZaPriznanjeZiga);
+    }
+
+    @GetMapping(value = "getAllApplied", produces = "application/xml")
+    public ResponseEntity<List<ZahtevZaPriznanjeZiga>> getAllApplied() throws JAXBException, XMLDBException {
+        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getAllApplied();
+        return ResponseEntity.ok(zahtevi);
+    }
+
+    @GetMapping(value = "getAllApproved", produces = "application/xml")
+    public ResponseEntity<List<ZahtevZaPriznanjeZiga>> getAllApproved() throws JAXBException, XMLDBException {
+        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getAllApproved();
+        return ResponseEntity.ok(zahtevi);
+    }
+
+    @GetMapping(value = "getAllCanceled", produces = "application/xml")
+    public ResponseEntity<List<ZahtevZaPriznanjeZiga>> getAllCanceled() throws JAXBException, XMLDBException {
+        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getAllCanceled();
+        return ResponseEntity.ok(zahtevi);
+    }
+
+    @PostMapping(value = "approve" ,produces = "application/xml",consumes = "application/xml")
+    public ResponseEntity<?> approveRequest(@RequestBody ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga ){
+
+        ZahtevZaPriznanjeZiga zahtev = zigService.approveRequest(zahtevZaPriznanjeZiga);
+        zahtev = zigService.saveXMLinDB(zahtevZaPriznanjeZiga);
+        return ResponseEntity.ok().body(zahtev);
+    }
+
+    @PostMapping(value = "deny" ,produces = "application/xml",consumes = "application/xml")
+    public ResponseEntity<?> denyRequest(@RequestBody ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga ){
+
+        ZahtevZaPriznanjeZiga zahtev = zigService.denyRequest(zahtevZaPriznanjeZiga);
+        zahtev = zigService.saveXMLinDB(zahtevZaPriznanjeZiga);
+        return ResponseEntity.ok().body(zahtev);
+    }
+
+    @PostMapping(value = "/downloadRequestHTML",consumes = "application/xml")
+    public ResponseEntity<Resource> downloadHTML(@RequestBody ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga){
+        try {
+            File htmlFIle = zigService.getHTMLFileFromXML(zahtevZaPriznanjeZiga.getBrojZahteva());
             InputStreamResource resource = new InputStreamResource(new FileInputStream(htmlFIle));
 
             return ResponseEntity.ok()
@@ -122,4 +184,41 @@ public class ZigController {
             return ResponseEntity.internalServerError().body(null);
         }
     }
+    @PostMapping("/downloadRequestPDF")
+    public ResponseEntity<Resource> downloadRequestPDFFile(@RequestBody ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga){
+        try {
+            File pdfFile = zigService.getPDFFileFromXML(zahtevZaPriznanjeZiga.getBrojZahteva());
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(pdfFile));
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + pdfFile.getName())
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .contentLength(pdfFile.length())
+                    .body(resource);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(null);
+        }
+    }
+
+    @GetMapping(value = "getJson")
+    public ResponseEntity<?> getJsonMetadataById(@RequestParam(name = "id") String id) throws Exception {
+        String result = zigService.getMetadataById(id, "JSON");
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "getRdf", produces = "application/xml")
+    public ResponseEntity<String> getRdfMetadataById(@RequestParam(name = "id") String id) throws Exception {
+        String result = zigService.getMetadataById(id, "RDF");
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/search/{query}", produces = "application/xml", consumes = "application/xml")
+    public ResponseEntity<?> searchZigs(@PathVariable String query) {
+        List<ZahtevZaPriznanjeZiga> ret = zigService.searchZigs(query);
+        return new ResponseEntity<>(ret, HttpStatus.OK);
+    }
+
 }

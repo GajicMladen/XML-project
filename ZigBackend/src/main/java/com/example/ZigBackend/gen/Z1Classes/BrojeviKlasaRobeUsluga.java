@@ -46,11 +46,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "broj"
 })
-@XmlRootElement(name = "brojevi_klasa_robe_usluga")
+@XmlRootElement(name = "brojeviKlasaRobeUsluga")
 public class BrojeviKlasaRobeUsluga {
 
-    @XmlElement(type = Integer.class)
-    protected List<Integer> broj;
+    @XmlElement(type = String.class)
+    protected List<String> broj;
 
     /**
      * Gets the value of the broj property.
@@ -74,11 +74,11 @@ public class BrojeviKlasaRobeUsluga {
      * 
      * 
      */
-    public List<Integer> getBroj() {
-        if (broj == null) {
-            broj = new ArrayList<Integer>();
-        }
-        return this.broj;
+    public List<String> getBroj() {
+        return broj;
     }
 
+    public void setBroj(List<String> broj) {
+        this.broj = broj;
+    }
 }
