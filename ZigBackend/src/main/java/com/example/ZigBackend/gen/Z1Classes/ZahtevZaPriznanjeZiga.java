@@ -52,7 +52,8 @@ import javax.xml.bind.annotation.XmlType;
     "brojeviKlasaRobeUsluga",
     "zatrazenoPravoPrvenstva",
     "placanje",
-    "prilozi"
+    "prilozi",
+        "status"
 })
 @XmlRootElement(name = "zahtev_za_priznanje_ziga")
 public class ZahtevZaPriznanjeZiga {
@@ -61,22 +62,38 @@ public class ZahtevZaPriznanjeZiga {
     protected TLice podnosilac;
     @XmlElement(required = true)
     protected TLice punomocnik;
-    @XmlElement(name = "zajednicki_posrednik")
+    @XmlElement(name = "zajednickiPosrednik")
     protected TLice zajednickiPosrednik;
-    @XmlElement(name = "opis_ziga", required = true)
+    @XmlElement(name = "opisZiga", required = true)
     protected OpisZiga opisZiga;
-    @XmlElement(name = "brojevi_klasa_robe_usluga", required = true)
+    @XmlElement(name = "brojeviKlasaRobeUsluga", required = true)
     protected BrojeviKlasaRobeUsluga brojeviKlasaRobeUsluga;
-    @XmlElement(name = "zatrazeno_pravo_prvenstva", required = true)
+    @XmlElement(name = "zatrazenoPravoPrvenstva", required = true)
     protected ZatrazenoPravoPrvenstva zatrazenoPravoPrvenstva;
     @XmlElement(required = true)
     protected Placanje placanje;
     @XmlElement(required = true)
     protected Prilozi prilozi;
-    @XmlAttribute(name = "broj_zahteva")
+
+    @XmlElement( name = "status")
+    protected EStatusResenja status;
+    @XmlAttribute(name = "brojZahteva")
     protected String brojZahteva;
-    @XmlAttribute(name = "datum_zahteva")
+    @XmlAttribute(name = "datumZahteva")
     protected String datumZahteva;
+
+
+    public EStatusResenja getStatus() {
+        return status;
+    }
+
+    public void setStatus(EStatusResenja status) {
+        this.status = status;
+    }
+
+    public void setDatumZahteva(String datumZahteva) {
+        this.datumZahteva = datumZahteva;
+    }
 
     /**
      * Gets the value of the podnosilac property.
@@ -188,11 +205,11 @@ public class ZahtevZaPriznanjeZiga {
 
     /**
      * Sets the value of the brojeviKlasaRobeUsluga property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link BrojeviKlasaRobeUsluga }
-     *     
+     *
      */
     public void setBrojeviKlasaRobeUsluga(BrojeviKlasaRobeUsluga value) {
         this.brojeviKlasaRobeUsluga = value;

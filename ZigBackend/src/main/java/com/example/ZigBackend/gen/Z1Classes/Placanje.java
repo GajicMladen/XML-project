@@ -46,9 +46,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "placanje")
 public class Placanje {
 
-    @XmlElement(name = "onsovna_taksa", required = true)
+    @XmlElement(name = "onsovnaTaksa", required = true)
     protected BigDecimal onsovnaTaksa;
-    @XmlElement(name = "graficko_resenje", required = true)
+    @XmlElement(name = "grafickoResenje", required = true)
     protected BigDecimal grafickoResenje;
     @XmlElement(required = true)
     protected BigDecimal ukupno;

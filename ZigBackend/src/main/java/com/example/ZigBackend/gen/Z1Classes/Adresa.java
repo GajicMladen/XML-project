@@ -56,7 +56,7 @@ public class Adresa {
 
     @XmlElement(required = true)
     protected String drzava;
-    @XmlElement(name = "postanski_broj")
+    @XmlElement(name = "postanskiBroj")
     protected int postanskiBroj;
     @XmlElement(required = true)
     protected String mesto;

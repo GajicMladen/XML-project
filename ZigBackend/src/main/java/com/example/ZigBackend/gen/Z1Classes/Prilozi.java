@@ -56,28 +56,28 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "prilozi")
 public class Prilozi {
 
-    @XmlElement(name = "primerak_znaka", required = true)
+    @XmlElement(name = "primerakZnaka", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String primerakZnaka;
-    @XmlElement(name = "spisak_robe_usluga", required = true)
+    @XmlElement(name = "spisakRobeUsluga", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String spisakRobeUsluga;
     @XmlElement(required = true)
     @XmlSchemaType(name = "anyURI")
     protected String punomocje;
-    @XmlElement(name = "generalno_punomocje_ranije_prilozeno", required = true)
+    @XmlElement(name = "generalnoPunomocjeRanijePrilozeno", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String generalnoPunomocjeRanijePrilozeno;
-    @XmlElement(name = "punomocje_naknadno_dostavljeno", required = true)
+    @XmlElement(name = "punomocjeNaknadnoDostavljeno", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String punomocjeNaknadnoDostavljeno;
-    @XmlElement(name = "opsti_akt_o_kolektivnom_zigu", required = true)
+    @XmlElement(name = "opstiAktOKolektivnomZigu", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String opstiAktOKolektivnomZigu;
-    @XmlElement(name = "dokaz_o_pravu_prvenstva", required = true)
+    @XmlElement(name = "dokazOPravuprvenstva", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String dokazOPravuPrvenstva;
-    @XmlElement(name = "dokaz_o_uplati_takse", required = true)
+    @XmlElement(name = "dokazOUplatiTakse", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String dokazOUplatiTakse;
 

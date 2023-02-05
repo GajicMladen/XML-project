@@ -64,19 +64,19 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "znak")
 public class Znak {
 
-    @XmlElement(name = "izgled_znaka", required = true)
+    @XmlElement(name = "izgledZnaka", required = true)
     @XmlSchemaType(name = "anyURI")
     protected String izgledZnaka;
-    @XmlElement(name = "vrsta_znaka", required = true)
+    @XmlElement(name = "vrstaZnaka", required = true)
     @XmlSchemaType(name = "string")
     protected TVrstaZnaka vrstaZnaka;
-    @XmlElement(name = "boje_znaka", required = true)
-    protected Znak.BojeZnaka bojeZnaka;
+    @XmlElement(name = "bojeZnaka", required = true)
+    protected BojeZnaka bojeZnaka;
     @XmlElement(required = true)
     protected String transliteracija;
     @XmlElement(required = true)
     protected String prevod;
-    @XmlElement(name = "opis_znaka", required = true)
+    @XmlElement(name = "opisZnaka", required = true)
     protected String opisZnaka;
 
     /**
@@ -127,28 +127,12 @@ public class Znak {
         this.vrstaZnaka = value;
     }
 
-    /**
-     * Gets the value of the bojeZnaka property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Znak.BojeZnaka }
-     *     
-     */
-    public Znak.BojeZnaka getBojeZnaka() {
+    public BojeZnaka getBojeZnaka() {
         return bojeZnaka;
     }
 
-    /**
-     * Sets the value of the bojeZnaka property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Znak.BojeZnaka }
-     *     
-     */
-    public void setBojeZnaka(Znak.BojeZnaka value) {
-        this.bojeZnaka = value;
+    public void setBojeZnaka(BojeZnaka bojeZnaka) {
+        this.bojeZnaka = bojeZnaka;
     }
 
     /**
