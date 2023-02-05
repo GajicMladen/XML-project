@@ -7,6 +7,8 @@ import com.example.ZigBackend.rdf.FusekiDB;
 import com.example.ZigBackend.gen.Z1Classes.EStatusResenja;
 import com.example.ZigBackend.service.MarshallerZig;
 import org.exist.xmldb.RemoteXMLResource;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
@@ -124,5 +126,9 @@ public class ZigRepository {
 
     public String generateJSON(String brojPrijave) throws Exception {
         return FusekiDB.getJsonString(brojPrijave);
+    }
+
+    public List<XMLResource> getZigSearch(String query) throws Exception {
+        return ZigDB.getAllBySearch(query);
     }
 }

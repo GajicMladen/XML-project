@@ -22,6 +22,7 @@ import javax.xml.transform.stream.StreamSource;
 import com.itextpdf.text.DocumentException;
 import org.exist.xmldb.RemoteXMLResource;
 import org.springframework.core.io.InputStreamResource;
+import org.xml.sax.InputSource;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 //import com.itextpdf.text.pdf.PdfWriter;
@@ -89,7 +90,7 @@ public class HTMLTransformer {
         try {
 
             DocumentBuilder builder = documentFactory.newDocumentBuilder();
-            document = builder.parse(xmlResource.getStreamContent());
+            document = builder.parse(new InputSource(new StringReader((String) xmlResource.getContent())));
 
             if (document != null)
                 System.out.println("[INFO] File parsed with no errors.");
@@ -163,7 +164,7 @@ public class HTMLTransformer {
             transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
 
             // Transform DOM to HTML
-            DOMSource source = new DOMSource(xmlResource.getContentAsDOM());
+            DOMSource source = new DOMSource( buildDocumentFromXMLResource(xmlResource));
             File htmlFile = loadFile(HTML_FILE);
             StreamResult result = new StreamResult(new FileOutputStream(htmlFile));
             transformer.transform(source, result);
@@ -178,8 +179,6 @@ public class HTMLTransformer {
         } catch (TransformerException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (XMLDBException e) {
             throw new RuntimeException(e);
         }
         return null;

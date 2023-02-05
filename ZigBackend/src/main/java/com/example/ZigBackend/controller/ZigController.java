@@ -214,4 +214,11 @@ public class ZigController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+
+    @GetMapping(value = "/search/{query}", produces = "application/xml", consumes = "application/xml")
+    public ResponseEntity<?> searchZigs(@PathVariable String query) {
+        List<ZahtevZaPriznanjeZiga> ret = zigService.searchZigs(query);
+        return new ResponseEntity<>(ret, HttpStatus.OK);
+    }
+
 }

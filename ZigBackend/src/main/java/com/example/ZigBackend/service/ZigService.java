@@ -14,11 +14,13 @@ import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.ZigBackend.gen.Z1Classes.ZahtevZaPriznanjeZiga;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.modules.XMLResource;
 
 import static com.example.ZigBackend.utils.Utils.getTestZahtevZaPrizanjeZiga;
 
@@ -137,4 +139,17 @@ public class ZigService {
             return rdfService.getRdfMetadata(sparqlQuery);
         }
     }
+
+    public List<ZahtevZaPriznanjeZiga> searchZigs(String query) {
+        List<ZahtevZaPriznanjeZiga> ret = new ArrayList<ZahtevZaPriznanjeZiga>();
+        try {
+            List<XMLResource> resources = zigRepository.getZigSearch(query);
+            for (XMLResource res: resources)
+                ret.add( MarshallerZig.unmarshal(res) );
+        } catch (Exception e) {
+            return ret;
+        }
+        return ret;
+    }
+
 }

@@ -105,6 +105,11 @@ public class ZigDB {
         return getAllByFilter(xpathExp);
     }
 
+    public static List<XMLResource> getAllBySearch(String query){
+        String xPathExp = "/*[contains(., '" + query + "')]";
+        return getAllByFilter(xPathExp);
+    }
+
     private static List<XMLResource> getAllByFilter(String xpathExp){
         List<XMLResource> resources = new ArrayList<XMLResource>();
 
@@ -121,8 +126,6 @@ public class ZigDB {
     }
 
     private static XQueryService getXPathQueryServiceForZig(Collection col) throws XMLDBException {
-//        XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
-//        xpathService.setProperty("indent", "yes");
         XQueryService xpathService = (XQueryService) col.getService("XQueryService","1.0");
         xpathService.setProperty("indent","yes");
         return xpathService;
@@ -265,5 +268,4 @@ public class ZigDB {
             return col;
         }
     }
-
 }
