@@ -3,7 +3,6 @@ package com.example.patentservice.dto;
 import java.util.List;
 
 public class Zahtev {
-	  private String sender;
 	  private NazivPronalaska nazivPronalaska;
 	  private PodnosilacPrijave podnosilacPrijave;
 	  private PodaciOPronalazacu podaciOPronalazacu;
@@ -12,12 +11,7 @@ public class Zahtev {
 	  private NacinDostavljanja nacinDostavljanja;
 	  private Dopuna dopuna;
 	  private List<PravaPrvenstva> priznavanjePravaPrvenstva;
-	public String getSender() {
-		return sender;
-	}
-	public void setSender(String sender) {
-		this.sender = sender;
-	}
+	
 	public NazivPronalaska getNazivPronalaska() {
 		return nazivPronalaska;
 	}
