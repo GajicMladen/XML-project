@@ -91,7 +91,7 @@ public class ZigController {
 
         return new ResponseEntity<>("OK" , HttpStatus.OK);
     }
-    @GetMapping("/downloadPDF")
+    @PostMapping("/downloadPDF")
     public ResponseEntity<Resource> downloadFile(){
         try {
             File pdfFile = zigService.getTestPDFFile();
@@ -108,7 +108,7 @@ public class ZigController {
             return ResponseEntity.internalServerError().body(null);
         }
     }
-    @GetMapping(value = "/downloadHTML",produces = "application/xml")
+    @PostMapping(value = "/downloadHTML",produces = "application/xml")
     public ResponseEntity<Resource> downloadHTML(){
         try {
             File htmlFIle = zigService.getTestHTMLFile();
