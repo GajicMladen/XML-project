@@ -21,6 +21,8 @@ import org.xmldb.api.modules.XPathQueryService;
 import org.xmldb.api.modules.XQueryService;
 import org.xmldb.api.modules.XUpdateQueryService;
 
+import com.example.patentservice.dto.Resenje;
+
 @Component
 public class ExistManager {
 	
@@ -209,51 +211,43 @@ public class ExistManager {
 		return count;
 	}
 	
-//	public void solveRequest(String collectionUri, String id, String newStatus) throws Exception {
-//		createConnection();
-//		String documentId = id + ".xml";
-//        Collection col = null;
-//        
-//        try { 
-//        	String statusXPath = "//status_zahteva";        	
-//        	String datumXPath = "//datum_podnosenja";
-//        	String imeXPath = "//sluzbenik";
-//        	String obrazlozenjeXPath = "//obrazlozenje";
-//        	
-//        	String patch = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
-//        				   + "\" >" + "<xu:update select=\"%1$s\">%2$s</xu:update>"
-//        				   + "</xu:modifications>";
-//        	
-//        	col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
-//            col.setProperty("indent", "yes");
-//            XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
-//            xupdateService.setProperty("indent", "yes");
-//            
-//            String update1 = String.format(patch, statusXPath, resenjeDTO.getStatus());
-//            System.out.println("[INFO] Updating " + statusXPath + " node.");
-//            long mods1 = xupdateService.updateResource(documentId, update1);
-//            System.out.println("[INFO] " + mods1 + " modifications processed.");
-//            
-//            String update2 = String.format(patch, datumXPath, resenjeDTO.getDatum());
-//            System.out.println("[INFO] Updating " + datumXPath + " node.");
-//            long mods2 = xupdateService.updateResource(documentId, update2);
-//            System.out.println("[INFO] " + mods2 + " modifications processed.");
-//            
-//            String update3 = String.format(patch, imeXPath, resenjeDTO.getIme());
-//            System.out.println("[INFO] Updating " + imeXPath + " node.");
-//            long mods3 = xupdateService.updateResource(documentId, update3);
-//            System.out.println("[INFO] " + mods3 + " modifications processed.");
-//            
-//            String update4 = String.format(patch, obrazlozenjeXPath, resenjeDTO.getObrazlozenje());
-//            System.out.println("[INFO] Updating " + obrazlozenjeXPath + " node.");
-//            long mods4 = xupdateService.updateResource(documentId, update5);
-//            System.out.println("[INFO] " + mods5 + " modifications processed.");
-//        	
-//        } catch (Exception e) {
-//       
-//		}
-//        
-//	}
+	public void solveRequest(String collectionUri, String id, Resenje resenje) throws Exception {
+		createConnection();
+		String documentId = id + ".xml";
+        Collection col = null;
+        
+        try { 
+        	String statusXPath = "//status_zahteva";        	
+        	String datumXPath = "//datum_podnosenja";
+        	String imeXPath = "//sluzbenik";
+        	String obrazlozenjeXPath = "//obrazlozenje";
+        	
+        	String patch = "<xu:modifications version=\"1.0\" xmlns:xu=\"" + XUpdateProcessor.XUPDATE_NS
+        				   + "\" >" + "<xu:update select=\"%1$s\">%2$s</xu:update>"
+        				   + "</xu:modifications>";
+        	
+        	col = DatabaseManager.getCollection(authManager.getUri() + collectionUri, authManager.getUser(), authManager.getPassword());
+            col.setProperty("indent", "yes");
+            XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
+            xupdateService.setProperty("indent", "yes");
+            
+            String update1 = String.format(patch, statusXPath, resenje.getStatus());
+            xupdateService.updateResource(documentId, update1);
+            
+            String update2 = String.format(patch, datumXPath, resenje.getDatumResenja());
+            xupdateService.updateResource(documentId, update2);
+            
+            String update3 = String.format(patch, imeXPath, resenje.getSluzbenik());
+            xupdateService.updateResource(documentId, update3);
+            
+            String update4 = String.format(patch, obrazlozenjeXPath, resenje.getObrazlozenje());
+            xupdateService.updateResource(documentId, update4);
+        	
+        } catch (Exception e) {
+        	return;
+		}
+        
+	}
 	
 	public ResourceSet search(String collectionUri, String query) throws ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
 		createConnection();

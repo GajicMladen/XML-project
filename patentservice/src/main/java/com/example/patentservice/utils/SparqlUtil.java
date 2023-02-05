@@ -29,6 +29,8 @@ public class SparqlUtil {
 	/* An XML serialization format for RDF data */
 	public static final String RDF_XML = "RDF/XML";
 	
+	public static final String CONSTRUCT_NAMED_GRAPH_TEMPLATE = "CONSTRUCT FROM <%1$s> WHERE { %2$s }";
+	
 	public static String dropAll() {
 		return DROP_ALL;
 	}
@@ -50,4 +52,7 @@ public class SparqlUtil {
 		return String.format(SELECT_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
 	}
 	
+	public static String constructData(String graphURI, String sparqlCondition) {
+        return String.format(CONSTRUCT_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
+    }
 }

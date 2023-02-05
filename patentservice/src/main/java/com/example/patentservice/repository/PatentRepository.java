@@ -15,18 +15,20 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.example.patentservice.beans.ZahtevZaPriznanjePatenta;
 import com.example.patentservice.db.ExistManager;
+import com.example.patentservice.dto.Resenje;
 
 @Repository
 public class PatentRepository {
 	
 	public static final String COLLECTION_ID = "/db/sample/patents";
+	public static final String RESENJE_COLLECTION_ID = "/db/sample/resenja";
 	public static final String RESOURCE_PATH = "src/main/resources/data/";
 	private static final String BEANS_PACKAGE = "com.example.patentservice.beans";
 	
 	@Autowired
 	private ExistManager existManager;
 	
-	public void writeXMLFiletoDB(String path) {
+	public void writeXMLFiletoDB(String path, String collection) {
 		try {
 			String[] tokens = path.split("/");
 			String fileName = tokens[tokens.length - 1];
@@ -39,7 +41,7 @@ public class PatentRepository {
 	public XMLResource readXMLfromDB(String documentId) {
 		XMLResource res = null;
 		try {
-			res = existManager.load(COLLECTION_ID, documentId + ".xml");
+			res = existManager.load(COLLECTION_ID, documentId);
 			return res;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,6 +59,19 @@ public class PatentRepository {
         	String xmlString = sw.toString();
         	existManager.storeFromText(COLLECTION_ID, zahtev.getPodaciZavod().getBrojPrijave() + ".xml", xmlString);
         	return zahtev;
+        } catch (Exception e) {
+        	return null;
+        }
+	}
+	
+	public Resenje saveResenjeToDB(Resenje resenje) {
+		try {
+        	
+        	String xmlString = resenje.toString();
+        	existManager.solveRequest(COLLECTION_ID, resenje.getPatent(), resenje);
+        	existManager.storeFromText(RESENJE_COLLECTION_ID, resenje.getSifra() + ".xml", xmlString);
+        
+        	return resenje;
         } catch (Exception e) {
         	return null;
         }
