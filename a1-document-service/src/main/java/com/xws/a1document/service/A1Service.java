@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
@@ -15,6 +16,7 @@ import javax.xml.bind.Marshaller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import main.java.com.xws.a1document.dto.MetadataSearch;
 import main.java.com.xws.a1document.dto.ObrazacA1DTO;
 import main.java.com.xws.a1document.dto.ResenjeDTO;
 import main.java.com.xws.a1document.dto.SedisteDTO;
@@ -345,6 +347,12 @@ public class A1Service {
 			String sparqlQuery = "<http://www.tim777.com/a/" + id + "> ?predicate ?object .";
             return rdfService.getRdfMetadata(sparqlQuery);
 		}
+	}
+	
+	public List<ObrazacA1> searchMetadata(MetadataSearch metadata) throws Exception {
+		List<ObrazacA1> obrasci = new ArrayList<ObrazacA1>();
+		rdfService.metadataSearch(metadata);
+		return obrasci;
 	}
 	
 	
